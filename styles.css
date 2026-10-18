@@ -504,6 +504,20 @@ body {
   border-color: var(--border-focus);
   box-shadow: 0 0 0 3px rgba(43, 122, 120, 0.15);
 }
+.input-field.input-error {
+  border-color: #C2410C;
+  background-color: #FFF7ED;
+}
+.input-field.input-error:focus {
+  border-color: #C2410C;
+  box-shadow: 0 0 0 3px rgba(194, 65, 12, 0.18);
+}
+.form-error-msg {
+  font-size: 13px;
+  color: #C2410C;
+  margin-top: 6px;
+  font-weight: 600;
+}
 .input-with-icon .input-field {
   padding-left: 44px;
   padding-right: 44px;
@@ -864,30 +878,32 @@ body {
   background: var(--primary-teal-light);
 }
 
-/* Floating Overwhelm / Freeze Button */
+/* Floating Overwhelm / Freeze Button (Calm, Low Stimulation) */
 .btn-overwhelm-float {
   position: absolute;
   bottom: 84px;
   right: 18px;
-  background: #FFF3EB;
-  color: #9A3412;
-  border: 1px solid #FCD4BD;
+  background: #F5EFE6;
+  color: #6B4E26;
+  border: 1px solid #DFD5C4;
   padding: 8px 14px;
   border-radius: var(--radius-pill);
   font-family: inherit;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   display: flex;
   align-items: center;
   gap: 6px;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(154, 52, 18, 0.15);
+  box-shadow: 0 4px 14px rgba(45, 35, 20, 0.08);
   z-index: 850;
   transition: all var(--transition-fast);
 }
 .btn-overwhelm-float:hover {
-  background: #FFE8D6;
+  background: #EAE1D3;
+  color: #4D371A;
   transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(45, 35, 20, 0.12);
 }
 
 /* Modals & Slide-Up Sheets */

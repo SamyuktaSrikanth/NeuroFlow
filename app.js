@@ -152,7 +152,7 @@
     const bottomNav = document.getElementById('bottomNavBar');
     const overwhelmFloat = document.getElementById('overwhelmFloatBtn');
 
-    if (screenId === 'login' || screenId === 'focus') {
+    if (screenId === 'login' || screenId === 'signup' || screenId === 'focus') {
       bottomNav.style.display = 'none';
       if (overwhelmFloat) overwhelmFloat.style.display = 'none';
     } else {
@@ -577,7 +577,7 @@
   // --- Overwhelm / Freeze Reset Flow ---
   window.completeOverwhelmStep = function () {
     window.closeModal('overwhelmModal');
-    window.showToast('You took a gentle pause. That is progress 🌱');
+    window.showToast('You took a gentle pause. That is progress.');
   };
 
   // --- Calendar Date Selection ---
@@ -652,7 +652,7 @@
     window.showToast('Accessibility preferences saved successfully!');
   };
 
-  // --- Password Reveal Toggle ---
+  // --- Password Reveal Toggles ---
   const togglePassBtn = document.getElementById('togglePasswordBtn');
   const passInput = document.getElementById('loginPassword');
   if (togglePassBtn && passInput) {
@@ -662,6 +662,109 @@
       togglePassBtn.setAttribute('aria-label', isPass ? 'Hide password' : 'Show password');
     });
   }
+
+  const toggleSignupPassBtn = document.getElementById('toggleSignupPasswordBtn');
+  const signupPassInput = document.getElementById('signupPassword');
+  if (toggleSignupPassBtn && signupPassInput) {
+    toggleSignupPassBtn.addEventListener('click', () => {
+      const isPass = signupPassInput.getAttribute('type') === 'password';
+      signupPassInput.setAttribute('type', isPass ? 'text' : 'password');
+      toggleSignupPassBtn.setAttribute('aria-label', isPass ? 'Hide password' : 'Show password');
+    });
+  }
+
+  // --- Static Login Password Validation ---
+  window.handleLoginSubmit = function () {
+    const emailInput = document.getElementById('loginEmail');
+    const passInput = document.getElementById('loginPassword');
+    const errorEl = document.getElementById('loginPasswordError');
+
+    const email = emailInput ? emailInput.value.trim() : '';
+    const password = passInput ? passInput.value : '';
+
+    // Clear previous error
+    if (errorEl) {
+      errorEl.style.display = 'none';
+      errorEl.textContent = '';
+    }
+    if (passInput) passInput.classList.remove('input-error');
+
+    if (!email) {
+      if (emailInput) emailInput.focus();
+      window.showToast('Please enter your email.');
+      return;
+    }
+
+    if (!password || password.length < 6) {
+      if (errorEl) {
+        errorEl.textContent = 'Password must be at least 6 characters.';
+        errorEl.style.display = 'block';
+      }
+      if (passInput) {
+        passInput.classList.add('input-error');
+        passInput.focus();
+      }
+      return;
+    }
+
+    // Static validation passed
+    window.showToast('Welcome back, Alex!');
+    window.navigateTo('home');
+  };
+
+  // --- Static Sign Up Form Handler ---
+  window.handleSignupSubmit = function () {
+    const nameInput = document.getElementById('signupName');
+    const emailInput = document.getElementById('signupEmail');
+    const passInput = document.getElementById('signupPassword');
+    const errorEl = document.getElementById('signupPasswordError');
+
+    const name = nameInput ? nameInput.value.trim() : 'Alex';
+    const email = emailInput ? emailInput.value.trim() : '';
+    const password = passInput ? passInput.value : '';
+
+    // Clear previous error
+    if (errorEl) {
+      errorEl.style.display = 'none';
+      errorEl.textContent = '';
+    }
+    if (passInput) passInput.classList.remove('input-error');
+
+    if (!password || password.length < 6) {
+      if (errorEl) {
+        errorEl.textContent = 'Password must be at least 6 characters.';
+        errorEl.style.display = 'block';
+      }
+      if (passInput) {
+        passInput.classList.add('input-error');
+        passInput.focus();
+      }
+      return;
+    }
+
+    // Update personalized greeting
+    const firstName = name.split(' ')[0] || 'Alex';
+    const greetingEl = document.getElementById('homeHeading');
+    if (greetingEl) {
+      greetingEl.textContent = `Good morning, ${firstName} 👋`;
+    }
+
+    window.showToast(`Account created! Welcome, ${firstName}.`);
+    window.navigateTo('home');
+  };
+
+  // --- Google Auth Simulation (Short Error Handling) ---
+  window.handleGoogleAuth = function (isSignup = true) {
+    const errorId = isSignup ? 'signupGoogleError' : 'loginGoogleError';
+    const errorEl = document.getElementById(errorId);
+    if (errorEl) {
+      errorEl.style.display = 'block';
+    }
+    const msg = isSignup
+      ? 'Google Sign-Up is unavailable in this prototype. Please register using email.'
+      : 'Google Sign-In is unavailable in this prototype. Please use email.';
+    window.showToast(msg);
+  };
 
   // --- Ambient Sound Synthesis (Web Audio API) ---
   window.setAmbientSound = function (type, btn) {
