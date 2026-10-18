@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>NeuroFlow — Neuro-Inclusive Digital Workspace</title>
+  <meta name="description" content="A cognitive-friendly digital workspace designed for college students with ADHD, dyslexia, and anxiety.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- App Wrapper / Phone Simulator -->
+  <div class="device-wrapper">
+    <main class="device-frame" id="appFrame">
+      
+      <!-- Device Hardware Accents -->
+      <div class="device-notch">
+        <div class="device-speaker"></div>
+      </div>
+
+      <!-- Device Status Bar -->
+      <header class="status-bar" aria-label="Status Bar">
+        <span id="liveClock">9:41</span>
+        <div class="status-icons">
+          <svg width="15" height="12" viewBox="0 0 15 12" fill="currentColor">
+            <path d="M1 9.5h2.5v2H1v-2zm4-3.5h2.5v5.5H5V6zm4-3.5h2.5v9H9v-9zm4-2.5h2.5v11.5H13V0z"/>
+          </svg>
+          <svg width="14" height="12" viewBox="0 0 16 12" fill="currentColor">
+            <path d="M8 0a13 13 0 00-7.3 2.3.9.9 0 00-.2 1.2l6.8 8.1c.4.4 1 .4 1.4 0l6.8-8.1a.9.9 0 00-.2-1.2A13 13 0 008 0z"/>
+          </svg>
+          <svg width="22" height="12" viewBox="0 0 24 12" fill="currentColor">
+            <rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" fill="none" stroke-width="1.5"/>
+            <rect x="3" y="3" width="13" height="6" rx="1.5"/>
+            <path d="M22 4.5v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </header>
+
+      <!-- Scrollable Viewport -->
+      <div class="screen-scroll-container" id="scrollContainer">
+
+        <!-- ========================================== -->
+        <!-- SCREEN 1: LOGIN                            -->
+        <!-- ========================================== -->
+        <section class="app-screen" id="screen-login" aria-labelledby="loginHeading">
+          <div class="brand-header">
+            <div class="brand-logo">
+              <svg viewBox="0 0 24 24">
+                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2Z" stroke-width="2"/>
+                <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2Z" stroke-width="2"/>
+              </svg>
+              <span>NeuroFlow</span>
+            </div>
+            <button class="icon-btn-ghost" id="loginA11yBtn" title="Quick Accessibility Settings" aria-label="Quick Accessibility Settings">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+            </button>
+          </div>
+
+          <p class="screen-subtitle" style="margin-bottom: 24px; font-weight: 500;">A calmer way to get things done</p>
+
+          <h1 class="screen-title-large" id="loginHeading" style="margin-bottom: 6px;">Welcome back</h1>
+          <p class="screen-subtitle" style="margin-bottom: 24px;">
+            NeuroFlow helps you plan, focus, and learn without unnecessary cognitive overload.
+          </p>
+
+          <form id="loginForm" onsubmit="event.preventDefault(); window.navigateTo('home');">
+            <div class="form-group">
+              <label class="form-label" for="loginEmail">Email</label>
+              <div class="input-with-icon">
+                <svg class="input-icon-leading" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                </svg>
+                <input class="input-field" type="email" id="loginEmail" value="alex.student@university.edu" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="loginPassword">Password</label>
+              <div class="input-with-icon">
+                <svg class="input-icon-leading" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <input class="input-field" type="password" id="loginPassword" value="CalmFocus2026!" required>
+                <!-- Accessible Password Reveal Toggle -->
+                <button type="button" class="input-icon-trailing" id="togglePasswordBtn" title="Show or hide password" aria-label="Show password">
+                  <svg id="eyeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+              <button type="button" class="header-link-label" style="text-transform: none; font-size: 14px;" onclick="window.showToast('Password reset link sent to student inbox!')">
+                Forgot password?
+              </button>
+            </div>
+
+            <button type="submit" class="btn-primary" style="margin-bottom: 14px;">
+              Log In
+            </button>
+
+            <div style="display: flex; align-items: center; margin: 16px 0; color: var(--text-muted); font-size: 13px;">
+              <div style="flex: 1; height: 1px; background: var(--border-color);"></div>
+              <span style="padding: 0 12px;">or</span>
+              <div style="flex: 1; height: 1px; background: var(--border-color);"></div>
+            </div>
+
+            <button type="button" class="btn-secondary" style="margin-bottom: 16px;" onclick="window.navigateTo('home')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="m9 12 2 2 4-4"></path>
+              </svg>
+              <span>Continue with Google</span>
+            </button>
+
+            <p style="text-align: center; font-size: 14px; color: var(--text-muted);">
+              New here? <button type="button" class="header-link-label" style="text-transform: none; font-size: 14px;" onclick="window.navigateTo('home')">Sign up</button>
+            </p>
+          </form>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- SCREEN 2: HOME / DASHBOARD                 -->
+        <!-- ========================================== -->
+        <section class="app-screen" id="screen-home" aria-labelledby="homeHeading">
+          <div class="brand-header">
+            <div class="brand-logo">
+              <svg viewBox="0 0 24 24">
+                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2Z" stroke-width="2"/>
+                <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2Z" stroke-width="2"/>
+              </svg>
+              <span>NeuroFlow</span>
+            </div>
+            <button class="icon-btn-ghost" onclick="window.navigateTo('profile')" title="Profile & Settings" aria-label="Profile and Settings">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </button>
+          </div>
+
+          <div class="screen-breadcrumbs">HOME / TODAY</div>
+          <h1 class="screen-title-large" id="homeHeading">Good morning, Alex 👋</h1>
+          <p class="screen-subtitle" id="homeSummarySub">3 tasks · 1 class · 1 focus session</p>
+
+          <!-- Daily Progress Card (Fractional, Non-Punitive) -->
+          <article class="card" aria-label="Daily Progress">
+            <div class="card-header-flex">
+              <span class="card-title-eyebrow">DAILY PROGRESS</span>
+              <span class="card-value-fraction" id="homeProgressFraction">0 / 3</span>
+            </div>
+            <div class="progress-segments-bar" id="homeProgressSegments" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0">
+              <div class="progress-segment"></div>
+              <div class="progress-segment"></div>
+              <div class="progress-segment"></div>
+            </div>
+          </article>
+
+          <!-- "Your Next Step" Actionable Card (Eliminates ADHD Initiation Barrier) -->
+          <article class="card card-next-step" aria-label="Recommended Next Action">
+            <div class="card-title-eyebrow">YOUR NEXT STEP</div>
+            <div class="next-step-title" id="nextStepTitle">DBMS Assignment</div>
+            <div class="next-step-sub" id="nextStepActionDesc">Step 2 of 4: Outline ER Diagram (~15 min)</div>
+            <button class="btn-primary" onclick="window.launchFocusMode('DBMS Assignment', 'Outline ER Diagram')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              <span>START FOCUS</span>
+            </button>
+          </article>
+
+          <!-- Today's Tasks List -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin: 18px 0 10px;">
+            <h2 style="font-size: 18px; font-weight: 700; color: var(--text-main);">Today's Tasks</h2>
+            <span style="font-size: 13px; color: var(--text-muted);" id="todayTaskCount">3 tasks</span>
+          </div>
+
+          <div class="task-list" id="homeTaskList" role="list">
+            <!-- Dynamic task items injected via JS -->
+          </div>
+
+          <button class="btn-secondary" style="margin-top: 12px;" onclick="window.openModal('addTaskModal')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>Add Task</span>
+          </button>
+
+          <!-- Affirmative Positive Feedback -->
+          <p style="text-align: center; margin: 24px 0 12px; font-size: 14px; color: var(--primary-teal); font-weight: 600;">
+            You made progress today 🌱
+          </p>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- SCREEN 3: MY TASKS (Tabs & Deep Work)      -->
+        <!-- ========================================== -->
+        <section class="app-screen" id="screen-tasks" aria-labelledby="tasksHeading">
+          <div class="brand-header">
+            <div class="brand-logo">
+              <svg viewBox="0 0 24 24">
+                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2Z" stroke-width="2"/>
+                <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2Z" stroke-width="2"/>
+              </svg>
+              <span>NeuroFlow</span>
+            </div>
+            <button class="icon-btn-ghost" onclick="window.openModal('addTaskModal')" title="New Task" aria-label="Add new task">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+
+          <h1 class="screen-title-large" id="tasksHeading" style="margin-bottom: 14px;">My Tasks</h1>
+
+          <!-- Segmented Tab Bar (WCAG High Contrast) -->
+          <nav class="segmented-tab-bar" aria-label="Task Filter Tabs">
+            <button class="segment-tab-btn active" data-tab="today" onclick="window.switchTaskTab('today')">Today</button>
+            <button class="segment-tab-btn" data-tab="upcoming" onclick="window.switchTaskTab('upcoming')">Upcoming</button>
+            <button class="segment-tab-btn" data-tab="completed" onclick="window.switchTaskTab('completed')">Completed</button>
+          </nav>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <span class="card-title-eyebrow" id="tasksSectionHeader">TODAY (3 tasks)</span>
+            <span style="font-size: 12px; color: var(--text-muted);">Tap a task for details</span>
+          </div>
+
+          <div class="task-list" id="mainTaskList" role="list">
+            <!-- Populated via app.js -->
+          </div>
+
+          <button class="btn-secondary" style="margin-top: 14px;" onclick="window.openModal('addTaskModal')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>Add Task</span>
+          </button>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- SCREEN 4: FOCUS MODE (Distraction-Free)    -->
+        <!-- ========================================== -->
+        <section class="app-screen" id="screen-focus" aria-labelledby="focusHeading">
+          <div class="brand-header">
+            <button class="header-link-label" onclick="window.exitFocusMode()" style="display: flex; align-items: center; gap: 4px; text-transform: none; font-size: 15px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              <span>Back</span>
+            </button>
+            <div class="brand-logo" style="font-size: 18px;">
+              <span>NeuroFlow</span>
+            </div>
+            <!-- Timer Type Switcher (Depleting Disk vs Digits) -->
+            <button class="icon-btn-ghost" id="timerModeToggle" onclick="window.toggleTimerVisualMode()" title="Toggle Visual Analog Ring / Digital Numbers" aria-label="Toggle Analog and Digital Timer">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </button>
+          </div>
+
+          <div class="screen-breadcrumbs" id="focusHeading">FOCUS MODE</div>
+          <div class="card-title-eyebrow" style="margin-top: 8px;">CURRENT TASK</div>
+          <h2 style="font-size: 22px; font-weight: 700; color: var(--text-main); margin-bottom: 14px;" id="focusTaskName">
+            DBMS Assignment
+          </h2>
+
+          <!-- Hero Timer Card -->
+          <article class="timer-hero-card">
+            <!-- Digital Display Mode -->
+            <div id="digitalTimerBox">
+              <div class="timer-display-digits" id="timerDigits">24:32</div>
+            </div>
+
+            <!-- Visual Depleting Disk Mode (Time Timer Style for ADHD Time-Blindness) -->
+            <div id="visualTimerBox" style="display: none;" class="visual-timer-container">
+              <svg class="timer-circle-svg" width="160" height="160" viewBox="0 0 160 160">
+                <circle class="timer-circle-bg" cx="80" cy="80" r="68"></circle>
+                <circle class="timer-circle-progress" id="timerCircleProgress" cx="80" cy="80" r="68" stroke-dasharray="427.26" stroke-dashoffset="30"></circle>
+              </svg>
+              <div style="font-size: 20px; font-weight: 700; margin-top: 8px;" id="visualTimerDigits">24:32</div>
+            </div>
+
+            <!-- Step Progress Dashes -->
+            <div class="step-dash-indicators" id="focusStepDashes" aria-label="Step Progress">
+              <div class="step-dash active"></div>
+              <div class="step-dash"></div>
+              <div class="step-dash"></div>
+              <div class="step-dash"></div>
+            </div>
+            <div style="font-size: 13px; color: var(--text-muted); font-weight: 600;" id="focusStepCountText">
+              Step 1 of 4
+            </div>
+          </article>
+
+          <!-- Current Step Display -->
+          <div class="card-title-eyebrow">CURRENT STEP</div>
+          <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px; margin-bottom: 16px;">
+            <p style="font-size: 17px; font-weight: 700; color: var(--text-main);" id="focusStepTitle">
+              Write the introduction
+            </p>
+          </div>
+
+          <!-- Primary Actions -->
+          <button class="btn-primary" id="focusCompleteStepBtn" onclick="window.completeFocusStep()" style="margin-bottom: 10px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Complete Step & Continue</span>
+          </button>
+
+          <button class="btn-secondary" id="focusPauseBtn" onclick="window.togglePauseTimer()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+              <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+            </svg>
+            <span id="pauseBtnLabel">PAUSE</span>
+          </button>
+
+          <!-- Audio & Cognitive Rescue Tools -->
+          <div class="focus-actions-grid">
+            <button class="btn-secondary" id="ambientSoundBtn" onclick="window.openModal('ambientModal')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+              <span id="ambientSoundLabel">Ambient sound</span>
+            </button>
+
+            <button class="btn-secondary" onclick="window.openModal('stuckModal')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+              </svg>
+              <span>I'm stuck?</span>
+            </button>
+          </div>
+
+          <p style="text-align: center; margin-top: 18px; font-size: 13px; color: var(--text-muted);">
+            Next: 5 min break
+          </p>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- SCREEN 5: CALENDAR & TIMELINE              -->
+        <!-- ========================================== -->
+        <section class="app-screen" id="screen-calendar" aria-labelledby="calendarHeading">
+          <div class="brand-header">
+            <div class="brand-logo">
+              <svg viewBox="0 0 24 24">
+                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2Z" stroke-width="2"/>
+                <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2Z" stroke-width="2"/>
+              </svg>
+              <span>NeuroFlow</span>
+            </div>
+            <button class="header-link-label" onclick="window.selectCalendarDay(23)">TODAY</button>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <h1 class="screen-title-large" id="calendarHeading" style="font-size: 22px; margin: 0;">September 2026</h1>
+            <button class="btn-primary" style="width: auto; min-height: 36px; padding: 0 14px; font-size: 13px;" onclick="window.openModal('addEventModal')">
+              + Add Event
+            </button>
+          </div>
+
+          <!-- Accessible Rolling 5-Day Strip (Eliminates Tiny Month Grid) -->
+          <nav class="calendar-rolling-strip" aria-label="5-Day Date Selector">
+            <div class="calendar-day-pill" onclick="window.selectCalendarDay(21)">
+              <div class="day-pill-name">Mon</div>
+              <div class="day-pill-num">21</div>
+            </div>
+            <div class="calendar-day-pill" onclick="window.selectCalendarDay(22)">
+              <div class="day-pill-name">Tue</div>
+              <div class="day-pill-num">22</div>
+            </div>
+            <div class="calendar-day-pill active" onclick="window.selectCalendarDay(23)">
+              <div class="day-pill-name">Wed</div>
+              <div class="day-pill-num">23</div>
+            </div>
+            <div class="calendar-day-pill" onclick="window.selectCalendarDay(24)">
+              <div class="day-pill-name">Thu</div>
+              <div class="day-pill-num">24</div>
+            </div>
+            <div class="calendar-day-pill" onclick="window.selectCalendarDay(25)">
+              <div class="day-pill-name">Fri</div>
+              <div class="day-pill-num">25</div>
+            </div>
+          </nav>
+
+          <!-- Up Next Highlight Card -->
+          <article class="card card-next-step" style="margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <span class="card-title-eyebrow">UP NEXT</span>
+              <span style="font-size: 12px; font-weight: 700; color: var(--primary-teal);">In 25 min</span>
+            </div>
+            <div style="font-size: 18px; font-weight: 700; color: var(--text-main);">09:00 — Lecture</div>
+            <div style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">Tech Block 2, Room 304</div>
+          </article>
+
+          <!-- Semantic Key / Filter Legend -->
+          <div class="card-title-eyebrow" style="margin-bottom: 8px;">SCHEDULE KEY</div>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px;">
+            <span class="badge-tag badge-class">● Class</span>
+            <span class="badge-tag badge-assign">◆ Assignment</span>
+            <span class="badge-tag badge-exam">■ Exam</span>
+            <span class="badge-tag badge-break">☕ Rest / Break</span>
+            <span class="badge-tag badge-personal">▲ Personal</span>
+          </div>
+
+          <!-- Vertical Timeline with Error Fixes -->
+          <div class="card-title-eyebrow" style="margin-bottom: 10px;">TODAY'S TIMELINE</div>
+          <div class="timeline-list">
+            <div class="timeline-item">
+              <div class="timeline-node"></div>
+              <span class="timeline-time">09:00</span>
+              <div class="timeline-content-card">
+                <div>
+                  <div style="font-weight: 700; font-size: 14px;">Lecture: Database Systems</div>
+                  <div style="font-size: 12px; color: var(--text-muted);">Prof. Miller</div>
+                </div>
+                <span class="badge-tag badge-class">Class</span>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-node"></div>
+              <span class="timeline-time">11:00</span>
+              <div class="timeline-content-card">
+                <div>
+                  <div style="font-weight: 700; font-size: 14px;">Study: DBMS Queries</div>
+                  <div style="font-size: 12px; color: var(--text-muted);">Library 2nd Floor</div>
+                </div>
+                <span class="badge-tag badge-assign">Assignment</span>
+              </div>
+            </div>
+
+            <!-- Fixed: Tagged as Rest/Break, NOT Exam! -->
+            <div class="timeline-item">
+              <div class="timeline-node" style="border-color: #237A3D;"></div>
+              <span class="timeline-time">13:00</span>
+              <div class="timeline-content-card" style="background: #F4FAF5; border-color: #D3ECD9;">
+                <div>
+                  <div style="font-weight: 700; font-size: 14px;">Lunch & Mindful Break</div>
+                  <div style="font-size: 12px; color: #237A3D;">Walk outside, recharge mental battery</div>
+                </div>
+                <span class="badge-tag badge-break">Rest</span>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-node"></div>
+              <span class="timeline-time">14:00</span>
+              <div class="timeline-content-card">
+                <div>
+                  <div style="font-weight: 700; font-size: 14px;">DBMS Practical Lab</div>
+                  <div style="font-size: 12px; color: var(--text-muted);">Lab Complex 1</div>
+                </div>
+                <span class="badge-tag badge-class">Class</span>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-node"></div>
+              <span class="timeline-time">17:00</span>
+              <div class="timeline-content-card">
+                <div>
+                  <div style="font-weight: 700; font-size: 14px;">Submit Project Draft</div>
+                  <div style="font-size: 12px; color: var(--text-muted);">Student Portal</div>
+                </div>
+                <span class="badge-tag badge-personal">Personal</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Automated Plan Confirmation Card -->
+          <article class="card" style="background: var(--bg-card-subtle); margin-top: 14px;">
+            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--primary-teal); margin-bottom: 4px;">
+              PLAN CONFIRMED
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.4;">
+              You have 4 tasks and 2 classes today. NeuroFlow arranged your tasks around your schedule and added two short recovery breaks.
+            </p>
+          </article>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- SCREEN 6: PROFILE & ACCESSIBILITY          -->
+        <!-- ========================================== -->
+        <section class="app-screen" id="screen-profile" aria-labelledby="profileHeading">
+          <div class="brand-header">
+            <div class="brand-logo">
+              <svg viewBox="0 0 24 24">
+                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2Z" stroke-width="2"/>
+                <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2Z" stroke-width="2"/>
+              </svg>
+              <span>NeuroFlow</span>
+            </div>
+          </div>
+
+          <div class="screen-breadcrumbs">PROFILE</div>
+          <h1 class="screen-title-large" id="profileHeading" style="font-size: 22px;">Make NeuroFlow work better for you.</h1>
+
+          <!-- User Card -->
+          <article class="card" style="margin-bottom: 20px;">
+            <div style="font-size: 17px; font-weight: 700;">Alex</div>
+            <div style="font-size: 14px; color: var(--text-muted);">Computer Science Undergraduate</div>
+          </article>
+
+          <!-- Accessibility Section -->
+          <div class="card-title-eyebrow" style="margin-bottom: 8px;">ACCESSIBILITY</div>
+
+          <div class="form-group">
+            <label class="form-label">Font Size</label>
+            <div class="pill-selector-group">
+              <button class="pref-pill-btn" onclick="window.setFontScale('small', this)">A-</button>
+              <button class="pref-pill-btn active" onclick="window.setFontScale('normal', this)">A</button>
+              <button class="pref-pill-btn" onclick="window.setFontScale('large', this)">A+</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Typeface (Dyslexia Friendly)</label>
+            <div class="pill-selector-group">
+              <button class="pref-pill-btn active" onclick="window.setFontFamily('Atkinson Hyperlegible', this)">Atkinson</button>
+              <button class="pref-pill-btn" onclick="window.setFontFamily('Lexend', this)">Lexend</button>
+              <button class="pref-pill-btn" onclick="window.setFontFamily('Inter', this)">Default</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Appearance</label>
+            <div class="pill-selector-group">
+              <button class="pref-pill-btn active" onclick="window.setTheme('light', this)">Light</button>
+              <button class="pref-pill-btn" onclick="window.setTheme('dark', this)">Dark</button>
+              <button class="pref-pill-btn" onclick="window.setTheme('low-stimulation', this)">Low Stim</button>
+            </div>
+          </div>
+
+          <!-- Focus Preferences Steppers -->
+          <div class="card-title-eyebrow" style="margin: 18px 0 8px;">FOCUS PREFERENCES</div>
+          
+          <div class="stepper-row">
+            <div>
+              <div style="font-weight: 700; font-size: 14px;">Focus duration</div>
+              <div style="font-size: 12px; color: var(--text-muted);">Ideal chunk for ADHD flow</div>
+            </div>
+            <div class="stepper-controls">
+              <button class="stepper-btn" onclick="window.adjustDuration('focus', -5)">-</button>
+              <span class="stepper-value" id="focusDurationValue">25 min</span>
+              <button class="stepper-btn" onclick="window.adjustDuration('focus', 5)">+</button>
+            </div>
+          </div>
+
+          <div class="stepper-row">
+            <div>
+              <div style="font-weight: 700; font-size: 14px;">Break duration</div>
+              <div style="font-size: 12px; color: var(--text-muted);">Scheduled mental reset</div>
+            </div>
+            <div class="stepper-controls">
+              <button class="stepper-btn" onclick="window.adjustDuration('break', -1)">-</button>
+              <span class="stepper-value" id="breakDurationValue">5 min</span>
+              <button class="stepper-btn" onclick="window.adjustDuration('break', 1)">+</button>
+            </div>
+          </div>
+
+          <!-- Reminder Style -->
+          <div class="card-title-eyebrow" style="margin: 18px 0 8px;">NOTIFICATIONS</div>
+          <div class="form-group">
+            <label class="form-label">Reminder style</label>
+            <div class="pill-selector-group">
+              <button class="pref-pill-btn active" onclick="window.setReminderStyle('gentle', this)">Gentle</button>
+              <button class="pref-pill-btn" onclick="window.setReminderStyle('standard', this)">Standard</button>
+              <button class="pref-pill-btn" onclick="window.setReminderStyle('minimal', this)">Minimal</button>
+            </div>
+          </div>
+
+          <!-- Accessibility Options Checkboxes with Explanations -->
+          <div class="card-title-eyebrow" style="margin: 18px 0 8px;">ACCESSIBILITY OPTIONS</div>
+          <div class="card" style="padding: 12px 16px;">
+            <label style="display: flex; align-items: center; justify-content: space-between; padding: 6px 0; cursor: pointer;">
+              <div>
+                <div style="font-weight: 600; font-size: 14px;">Bionic Reading Mode</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Bolds initial letters for dyslexia eye guidance</div>
+              </div>
+              <input type="checkbox" id="bionicToggle" onchange="window.toggleBionicReading(this.checked)" style="width: 20px; height: 20px; accent-color: var(--primary-teal);">
+            </label>
+
+            <div style="height: 1px; background: var(--border-color); margin: 8px 0;"></div>
+
+            <label style="display: flex; align-items: center; justify-content: space-between; padding: 6px 0; cursor: pointer;">
+              <div>
+                <div style="font-weight: 600; font-size: 14px;">Reduce animation</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Disables motion for vestibular comfort</div>
+              </div>
+              <input type="checkbox" id="reduceMotionToggle" style="width: 20px; height: 20px; accent-color: var(--primary-teal);">
+            </label>
+
+            <div style="height: 1px; background: var(--border-color); margin: 8px 0;"></div>
+
+            <label style="display: flex; align-items: center; justify-content: space-between; padding: 6px 0; cursor: pointer;">
+              <div>
+                <div style="font-weight: 600; font-size: 14px;">Reduce visual clutter</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Hides non-essential decorative elements</div>
+              </div>
+              <input type="checkbox" id="reduceClutterToggle" style="width: 20px; height: 20px; accent-color: var(--primary-teal);">
+            </label>
+          </div>
+
+          <button class="btn-primary" style="margin-top: 18px;" onclick="window.savePreferences()">
+            Save Preferences
+          </button>
+          <button class="btn-secondary" style="margin-top: 10px; margin-bottom: 24px;" onclick="window.navigateTo('login')">
+            Log out
+          </button>
+        </section>
+
+      </div><!-- /screen-scroll-container -->
+
+
+      <!-- ========================================== -->
+      <!-- PERSISTENT BOTTOM NAVIGATION BAR          -->
+      <!-- ========================================== -->
+      <nav class="bottom-nav-bar" id="bottomNavBar" aria-label="Main Navigation">
+        <button class="nav-tab-item active" data-screen="home" onclick="window.navigateTo('home')">
+          <svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>Home</span>
+        </button>
+
+        <button class="nav-tab-item" data-screen="tasks" onclick="window.navigateTo('tasks')">
+          <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="m9 14 2 2 4-4"></path></svg>
+          <span>Tasks</span>
+        </button>
+
+        <button class="nav-tab-item" data-screen="focus" onclick="window.navigateTo('focus')">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <span>Focus</span>
+        </button>
+
+        <button class="nav-tab-item" data-screen="calendar" onclick="window.navigateTo('calendar')">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          <span>Calendar</span>
+        </button>
+
+        <button class="nav-tab-item" data-screen="profile" onclick="window.navigateTo('profile')">
+          <svg viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>Profile</span>
+        </button>
+      </nav>
+
+      <!-- Floating "Feeling Overwhelmed?" Emergency Button -->
+      <button class="btn-overwhelm-float" id="overwhelmFloatBtn" onclick="window.openModal('overwhelmModal')" title="Emergency Calm Breathing & Micro-Step">
+        <span>🛑 Overwhelmed?</span>
+      </button>
+
+      <!-- Toast Notification Bar (Undo / Confirmation) -->
+      <div class="toast-bar" id="toastBar" role="status" aria-live="polite">
+        <span id="toastMessage">Action completed</span>
+        <button class="toast-undo-btn" id="toastUndoBtn" style="display: none;" onclick="window.undoLastAction()">Undo</button>
+      </div>
+
+
+      <!-- ========================================== -->
+      <!-- MODALS & SLIDE-UP SHEETS                   -->
+      <!-- ========================================== -->
+
+      <!-- 1. Task Detail Sheet (Checklist, Break Down, Focus) -->
+      <div class="modal-overlay" id="taskDetailModal" onclick="if(event.target===this) window.closeModal('taskDetailModal')">
+        <div class="modal-sheet" role="dialog" aria-labelledby="detailTitle">
+          <div class="modal-handle"></div>
+          <div class="card-title-eyebrow">TASK DETAIL</div>
+          <div class="modal-header-row">
+            <h2 class="modal-title" id="detailTitle">DBMS Assignment</h2>
+            <span class="badge-tag badge-assign" id="detailPriorityBadge">Normal Priority</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;" id="detailMeta">
+            Due date / time: Today · 6:00 PM
+          </p>
+
+          <div class="card-title-eyebrow" style="margin-bottom: 8px;">CHECKLIST</div>
+          <div class="task-list" id="detailChecklist" style="margin-bottom: 16px;">
+            <!-- Dynamic checklist items -->
+          </div>
+
+          <!-- Generated Micro-Steps Box (When broken down) -->
+          <div id="smallerStepsContainer" style="display: none; background: #EDF6F5; border: 1px solid #CDE6E3; border-radius: var(--radius-md); padding: 14px; margin-bottom: 16px;">
+            <div style="font-weight: 700; font-size: 13px; color: var(--primary-teal); margin-bottom: 8px;">
+              Smaller first steps (Generated by NeuroFlow AI)
+            </div>
+            <div class="task-list" id="smallerStepsList">
+              <!-- Checkable smaller steps injected here -->
+            </div>
+          </div>
+
+          <button class="btn-secondary btn-lavender" id="breakTaskBtn" onclick="window.breakDownActiveTask()" style="margin-bottom: 10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m15 15 6 6m-6-6v4.5m0-4.5h4.5M9 9 3 3m6 6V4.5M9 9H4.5"></path>
+            </svg>
+            <span>Break this task down</span>
+          </button>
+
+          <button class="btn-primary" onclick="window.startFocusFromDetail()" style="margin-bottom: 10px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span>Start Focus</span>
+          </button>
+
+          <button class="btn-secondary" onclick="window.closeModal('taskDetailModal')">Close</button>
+        </div>
+      </div>
+
+      <!-- 2. Add Task Sheet -->
+      <div class="modal-overlay" id="addTaskModal" onclick="if(event.target===this) window.closeModal('addTaskModal')">
+        <div class="modal-sheet" role="dialog" aria-labelledby="addTaskTitle">
+          <div class="modal-handle"></div>
+          <div class="modal-header-row">
+            <h2 class="modal-title" id="addTaskTitle">Add New Task</h2>
+            <button class="icon-btn-ghost" onclick="window.closeModal('addTaskModal')" aria-label="Close modal">✕</button>
+          </div>
+
+          <form onsubmit="event.preventDefault(); window.submitNewTask();">
+            <div class="form-group">
+              <label class="form-label" for="newTaskTitle">Task title</label>
+              <input class="input-field" type="text" id="newTaskTitle" placeholder="e.g., Read Research Paper Chapter 2" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="newTaskCourse">Course / Category</label>
+              <select class="input-field" id="newTaskCourse">
+                <option value="DBMS">DBMS [Class]</option>
+                <option value="Algorithms">Algorithms [Assignment]</option>
+                <option value="HCI">HCI Project [Class]</option>
+                <option value="Personal">Personal [Wellness]</option>
+              </select>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div class="form-group">
+                <label class="form-label" for="newTaskTime">Due Time</label>
+                <input class="input-field" type="time" id="newTaskTime" value="18:00">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="newTaskEstimate">Estimated Duration</label>
+                <select class="input-field" id="newTaskEstimate">
+                  <option value="15m">15 mins</option>
+                  <option value="25m" selected>25 mins (1 pomodoro)</option>
+                  <option value="45m">45 mins</option>
+                </select>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary" style="margin-bottom: 10px;">Add Task</button>
+            <button type="button" class="btn-secondary" onclick="window.closeModal('addTaskModal')">Cancel</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- 3. Add Event Sheet -->
+      <div class="modal-overlay" id="addEventModal" onclick="if(event.target===this) window.closeModal('addEventModal')">
+        <div class="modal-sheet" role="dialog" aria-labelledby="addEventTitle">
+          <div class="modal-handle"></div>
+          <div class="modal-header-row">
+            <h2 class="modal-title" id="addEventTitle">Add Schedule Event</h2>
+            <button class="icon-btn-ghost" onclick="window.closeModal('addEventModal')" aria-label="Close modal">✕</button>
+          </div>
+
+          <form onsubmit="event.preventDefault(); window.submitNewEvent();">
+            <div class="form-group">
+              <label class="form-label" for="newEventTitle">Event title</label>
+              <input class="input-field" type="text" id="newEventTitle" placeholder="e.g., HCI Group Presentation" required>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div class="form-group">
+                <label class="form-label" for="newEventDate">Date</label>
+                <input class="input-field" type="date" id="newEventDate" value="2026-09-23">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="newEventTime">Start Time</label>
+                <input class="input-field" type="time" id="newEventTime" value="10:00">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="newEventCategory">Category</label>
+              <select class="input-field" id="newEventCategory">
+                <option value="Class">Class</option>
+                <option value="Assignment">Assignment</option>
+                <option value="Exam">Exam</option>
+                <option value="Rest">Rest & Wellness</option>
+                <option value="Personal">Personal</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn-primary" style="margin-bottom: 10px;">Save Event</button>
+            <button type="button" class="btn-secondary" onclick="window.closeModal('addEventModal')">Cancel</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- 4. "I'm Stuck?" Cognitive De-escalation Sheet -->
+      <div class="modal-overlay" id="stuckModal" onclick="if(event.target===this) window.closeModal('stuckModal')">
+        <div class="modal-sheet" role="dialog" aria-labelledby="stuckTitle">
+          <div class="modal-handle"></div>
+          <h2 class="modal-title" id="stuckTitle" style="margin-bottom: 6px;">Let's make this gentler.</h2>
+          <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 18px;">
+            Getting stuck is natural. What feels right right now?
+          </p>
+
+          <button class="btn-secondary btn-lavender" onclick="window.makeStepSmallerAction()" style="margin-bottom: 10px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 14h6v6"></path><path d="M20 10h-6V4"></path>
+            </svg>
+            <span>Make this step smaller (Micro-action)</span>
+          </button>
+
+          <button class="btn-secondary" onclick="window.takeShortBreakAction()" style="margin-bottom: 10px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+              <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+            </svg>
+            <span>Take a 2-min breather</span>
+          </button>
+
+          <button class="btn-secondary" onclick="window.skipStepAction()" style="margin-bottom: 16px;">
+            <span>Skip to next step</span>
+          </button>
+
+          <button class="btn-secondary" style="border: none;" onclick="window.closeModal('stuckModal')">
+            Keep trying this step
+          </button>
+        </div>
+      </div>
+
+      <!-- 5. Overwhelm / Freeze Reset Modal -->
+      <div class="modal-overlay" id="overwhelmModal" onclick="if(event.target===this) window.closeModal('overwhelmModal')">
+        <div class="modal-sheet" role="dialog" aria-labelledby="overwhelmTitle" style="text-align: center;">
+          <div class="modal-handle"></div>
+          <h2 class="modal-title" id="overwhelmTitle">Take a slow breath.</h2>
+          <p style="font-size: 14px; color: var(--text-muted); margin-top: 4px;">
+            You don't need to finish everything right now. Just this one breath.
+          </p>
+
+          <div class="breathing-circle-container">
+            <div class="breathing-bubble" id="breathingBubble">
+              Breathe in...
+            </div>
+          </div>
+
+          <div class="card" style="background: var(--bg-card-subtle); text-align: left; margin-bottom: 16px;">
+            <div class="card-title-eyebrow">YOUR ONLY JOB RIGHT NOW:</div>
+            <div style="font-size: 16px; font-weight: 700; margin: 4px 0;" id="overwhelmMicroAction">
+              1. Take a sip of water and sit comfortably.
+            </div>
+            <div style="font-size: 13px; color: var(--text-muted);">
+              When done, click below to mark this tiny win.
+            </div>
+          </div>
+
+          <button class="btn-primary" onclick="window.completeOverwhelmStep()">
+            I did that tiny step 🌱
+          </button>
+        </div>
+      </div>
+
+      <!-- 6. Ambient Sound Selector Modal (Real Web Audio Synthesis) -->
+      <div class="modal-overlay" id="ambientModal" onclick="if(event.target===this) window.closeModal('ambientModal')">
+        <div class="modal-sheet" role="dialog" aria-labelledby="ambientTitle">
+          <div class="modal-handle"></div>
+          <div class="modal-header-row">
+            <h2 class="modal-title" id="ambientTitle">Calming Ambient Sound</h2>
+            <button class="icon-btn-ghost" onclick="window.closeModal('ambientModal')" aria-label="Close modal">✕</button>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+            Generated on-device to calm anxiety and mask distracting auditory stimuli.
+          </p>
+
+          <div class="pill-selector-group" style="flex-direction: column; gap: 8px;">
+            <button class="pref-pill-btn active" id="soundBtn-none" onclick="window.setAmbientSound('none', this)">
+              🔇 Off (Silence)
+            </button>
+            <button class="pref-pill-btn" id="soundBtn-rain" onclick="window.setAmbientSound('rain', this)">
+              🌧️ Gentle Rain & Drops
+            </button>
+            <button class="pref-pill-btn" id="soundBtn-brown" onclick="window.setAmbientSound('brown', this)">
+              🌊 Deep Brown Noise (ADHD Focus)
+            </button>
+            <button class="pref-pill-btn" id="soundBtn-stream" onclick="window.setAmbientSound('stream', this)">
+              🍃 Soft Mountain Stream
+            </button>
+          </div>
+
+          <button class="btn-secondary" style="margin-top: 8px;" onclick="window.closeModal('ambientModal')">Done</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
