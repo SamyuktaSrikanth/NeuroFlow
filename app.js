@@ -590,17 +590,67 @@
     window.showToast(`Showing schedule for Sep ${dayNum}, 2026`);
   };
 
-  // --- Profile & Accessibility Controls ---
-  window.setFontScale = function (scale, btn) {
-    state.preferences.fontScale = scale;
-    const btns = btn.parentElement.querySelectorAll('.pref-pill-btn');
-    btns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+  // --- Profile & Accessibility Controls: Dynamic Stepper & Font Scaling ---
+  const savedFontSize = (function () {
+    try {
+      const val = localStorage.getItem('neuroflow_font_size');
+      return val ? parseInt(val, 10) : null;
+    } catch (e) {
+      return null;
+    }
+  })();
+  state.preferences.fontSizePx = savedFontSize && !isNaN(savedFontSize) ? Math.max(12, Math.min(24, savedFontSize)) : 16;
 
+  function applyFontScale(currentPx, showFeedback = true) {
+    const minPx = 12;
+    const maxPx = 24;
+    const scale = currentPx / 16;
+
+    // Apply scale to CSS variable on document and appFrame
+    document.documentElement.style.setProperty('--font-scale', scale);
     const frame = document.getElementById('appFrame');
-    if (scale === 'small') frame.style.fontSize = '14px';
-    else if (scale === 'large') frame.style.fontSize = '18px';
-    else frame.style.fontSize = '16px';
+    if (frame) {
+      frame.style.setProperty('--font-scale', scale);
+    }
+
+    // Update display label
+    const displayEl = document.getElementById('fontSizeValueDisplay');
+    if (displayEl) {
+      displayEl.textContent = `${currentPx}px`;
+    }
+
+    // Update live preview box text
+    const previewGlyph = document.getElementById('fontPreviewGlyph');
+    if (previewGlyph) {
+      previewGlyph.textContent = `Aa (${currentPx}px)`;
+    }
+
+    // Update button visual opacity when at limit
+    const minusBtn = document.getElementById('fontSizeMinusBtn');
+    const plusBtn = document.getElementById('fontSizePlusBtn');
+    if (minusBtn) {
+      minusBtn.style.opacity = currentPx <= minPx ? '0.35' : '1';
+      minusBtn.disabled = currentPx <= minPx;
+    }
+    if (plusBtn) {
+      plusBtn.style.opacity = currentPx >= maxPx ? '0.35' : '1';
+      plusBtn.disabled = currentPx >= maxPx;
+    }
+
+    try {
+      localStorage.setItem('neuroflow_font_size', currentPx);
+    } catch (e) {}
+
+    if (showFeedback) {
+      window.showToast(`Font size set to ${currentPx}px across all screens`);
+    }
+  }
+
+  window.adjustFontSize = function (delta) {
+    const minPx = 12;
+    const maxPx = 24;
+    state.preferences.fontSizePx = Math.max(minPx, Math.min(maxPx, state.preferences.fontSizePx + delta));
+    applyFontScale(state.preferences.fontSizePx, true);
   };
 
   window.setFontFamily = function (family, btn) {
@@ -883,6 +933,11 @@
 
   // --- Onboarding / Init ---
   document.addEventListener('DOMContentLoaded', () => {
+    // Apply saved or default font size immediately across all pages
+    if (typeof applyFontScale === 'function') {
+      applyFontScale(state.preferences.fontSizePx, false);
+    }
+
     // Quick accessibility button on login navigates to profile
     const a11yBtn = document.getElementById('loginA11yBtn');
     if (a11yBtn) {

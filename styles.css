@@ -37,7 +37,8 @@
 
   /* Typography Defaults */
   --font-family: 'Atkinson Hyperlegible', sans-serif;
-  --font-size-base: 16px;
+  --font-scale: 1;
+  --font-size-base: calc(16px * var(--font-scale, 1));
   --font-line-height: 1.5;
   --font-letter-spacing: 0.01em;
 
@@ -1064,21 +1065,29 @@ body {
   gap: 12px;
 }
 .stepper-btn {
-  width: 32px;
-  height: 32px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   border: 1px solid var(--border-color);
-  background: var(--bg-card-subtle);
-  color: var(--text-main);
-  font-size: 16px;
+  background: var(--bg-card);
+  color: var(--primary-teal);
+  font-size: 20px;
   font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+  user-select: none;
 }
 .stepper-btn:hover {
-  background: var(--border-color);
+  background: var(--primary-teal-light);
+  border-color: var(--primary-teal);
+  transform: translateY(-1px);
+}
+.stepper-btn:active {
+  transform: scale(0.92);
 }
 .stepper-value {
   font-size: 15px;
@@ -1086,3 +1095,61 @@ body {
   min-width: 60px;
   text-align: center;
 }
+
+/* =================================================== */
+/* UNIVERSAL DYNAMIC FONT SCALING (ALL SCREENS & UI)   */
+/* =================================================== */
+#appFrame {
+  font-size: calc(16px * var(--font-scale, 1));
+}
+
+#appFrame .brand-logo { font-size: calc(22px * var(--font-scale, 1)); }
+#appFrame .screen-title-large { font-size: calc(24px * var(--font-scale, 1)); }
+#appFrame .screen-subtitle { font-size: calc(14px * var(--font-scale, 1)); }
+#appFrame .screen-breadcrumbs { font-size: calc(12px * var(--font-scale, 1)); }
+#appFrame .card-title-eyebrow { font-size: calc(12px * var(--font-scale, 1)); }
+#appFrame .card-value-fraction { font-size: calc(15px * var(--font-scale, 1)); }
+#appFrame .next-step-title { font-size: calc(18px * var(--font-scale, 1)); }
+#appFrame .next-step-sub { font-size: calc(14px * var(--font-scale, 1)); }
+#appFrame .btn-primary { font-size: calc(15px * var(--font-scale, 1)); }
+#appFrame .btn-secondary { font-size: calc(14px * var(--font-scale, 1)); }
+#appFrame .form-label { font-size: calc(14px * var(--font-scale, 1)); }
+#appFrame .input-field { font-size: calc(15px * var(--font-scale, 1)); }
+#appFrame .task-title-text { font-size: calc(15px * var(--font-scale, 1)); }
+#appFrame .task-meta-row { font-size: calc(12px * var(--font-scale, 1)); }
+#appFrame .task-time-pill { font-size: calc(12px * var(--font-scale, 1)); }
+#appFrame .badge-tag { font-size: calc(11px * var(--font-scale, 1)); }
+#appFrame .task-action-remove { font-size: calc(12px * var(--font-scale, 1)); }
+#appFrame .segment-tab-btn { font-size: calc(14px * var(--font-scale, 1)); }
+#appFrame .timer-display-digits { font-size: calc(64px * var(--font-scale, 1)); }
+#appFrame .day-pill-name { font-size: calc(11px * var(--font-scale, 1)); }
+#appFrame .day-pill-num { font-size: calc(18px * var(--font-scale, 1)); }
+#appFrame .timeline-time { font-size: calc(13px * var(--font-scale, 1)); }
+#appFrame .nav-tab-item { font-size: calc(11px * var(--font-scale, 1)); }
+#appFrame .btn-overwhelm-float { font-size: calc(13px * var(--font-scale, 1)); }
+#appFrame .modal-title { font-size: calc(19px * var(--font-scale, 1)); }
+#appFrame .breathing-bubble { font-size: calc(14px * var(--font-scale, 1)); }
+#appFrame .pref-pill-btn { font-size: calc(13px * var(--font-scale, 1)); }
+#appFrame .stepper-value { font-size: calc(15px * var(--font-scale, 1)); }
+#appFrame .form-error-msg { font-size: calc(13px * var(--font-scale, 1)); }
+#appFrame .toast-bar { font-size: calc(13px * var(--font-scale, 1)); }
+#appFrame .toast-undo-btn { font-size: calc(12px * var(--font-scale, 1)); }
+#appFrame .status-bar { font-size: calc(13px * var(--font-scale, 1)); }
+#appFrame .header-link-label { font-size: calc(13px * var(--font-scale, 1)); }
+
+/* Enforce scaling on all inline font-size declarations across all pages */
+#appFrame [style*="font-size: 11px"] { font-size: calc(11px * var(--font-scale, 1)) !important; }
+#appFrame [style*="font-size: 12px"] { font-size: calc(12px * var(--font-scale, 1)) !important; }
+#appFrame [style*="font-size: 13px"] { font-size: calc(13px * var(--font-scale, 1)) !important; }
+#appFrame [style*="font-size: 14px"] { font-size: calc(14px * var(--font-scale, 1)) !important; }
+#appFrame [style*="font-size: 15px"] { font-size: calc(15px * var(--font-scale, 1)) !important; }
+#appFrame [style*="font-size: 16px"] { font-size: calc(16px * var(--font-scale, 1)) !important; }
+#appFrame [style*="font-size: 17px"] { font-size: calc(17px * var(--font-scale, 1)) !important; }
+#appFrame [style*="font-size: 18px"] { font-size: calc(18px * var(--font-scale, 1)) !important; }
+#appFrame [style*="font-size: 19px"] { font-size: calc(19px * var(--font-scale, 1)) !important; }
+#appFrame [style*="font-size: 20px"] { font-size: calc(20px * var(--font-scale, 1)) !important; }
+#appFrame [style*="font-size: 22px"] { font-size: calc(22px * var(--font-scale, 1)) !important; }
+#appFrame [style*="font-size: 24px"] { font-size: calc(24px * var(--font-scale, 1)) !important; }
+#appFrame [style*="font-size: 28px"] { font-size: calc(28px * var(--font-scale, 1)) !important; }
+#appFrame [style*="font-size: 64px"] { font-size: calc(64px * var(--font-scale, 1)) !important; }
+
