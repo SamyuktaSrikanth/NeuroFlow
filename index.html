@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>NeuroFlow — Neuro-Inclusive Digital Workspace</title>
-  <meta name="description" content="A cognitive-friendly digital workspace designed for college students with ADHD, dyslexia, and anxiety.">
+  <meta name="description"
+    content="A cognitive-friendly digital workspace designed for college students with ADHD, dyslexia, and anxiety.">
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
   <!-- App Wrapper / Phone Simulator -->
   <div class="device-wrapper">
     <main class="device-frame" id="appFrame">
-      
+
       <!-- Device Hardware Accents -->
       <div class="device-notch">
         <div class="device-speaker"></div>
@@ -23,15 +26,16 @@
         <span id="liveClock">9:41</span>
         <div class="status-icons">
           <svg width="15" height="12" viewBox="0 0 15 12" fill="currentColor">
-            <path d="M1 9.5h2.5v2H1v-2zm4-3.5h2.5v5.5H5V6zm4-3.5h2.5v9H9v-9zm4-2.5h2.5v11.5H13V0z"/>
+            <path d="M1 9.5h2.5v2H1v-2zm4-3.5h2.5v5.5H5V6zm4-3.5h2.5v9H9v-9zm4-2.5h2.5v11.5H13V0z" />
           </svg>
           <svg width="14" height="12" viewBox="0 0 16 12" fill="currentColor">
-            <path d="M8 0a13 13 0 00-7.3 2.3.9.9 0 00-.2 1.2l6.8 8.1c.4.4 1 .4 1.4 0l6.8-8.1a.9.9 0 00-.2-1.2A13 13 0 008 0z"/>
+            <path
+              d="M8 0a13 13 0 00-7.3 2.3.9.9 0 00-.2 1.2l6.8 8.1c.4.4 1 .4 1.4 0l6.8-8.1a.9.9 0 00-.2-1.2A13 13 0 008 0z" />
           </svg>
           <svg width="22" height="12" viewBox="0 0 24 12" fill="currentColor">
-            <rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" fill="none" stroke-width="1.5"/>
-            <rect x="3" y="3" width="13" height="6" rx="1.5"/>
-            <path d="M22 4.5v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" fill="none" stroke-width="1.5" />
+            <rect x="3" y="3" width="13" height="6" rx="1.5" />
+            <path d="M22 4.5v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
           </svg>
         </div>
       </header>
@@ -46,15 +50,22 @@
           <div class="brand-header">
             <div class="brand-logo">
               <svg viewBox="0 0 24 24">
-                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2Z" stroke-width="2"/>
-                <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2Z" stroke-width="2"/>
+                <path
+                  d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2Z"
+                  stroke-width="2" />
+                <path
+                  d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2Z"
+                  stroke-width="2" />
               </svg>
               <span>NeuroFlow</span>
             </div>
-            <button class="icon-btn-ghost" id="loginA11yBtn" title="Quick Accessibility Settings" aria-label="Quick Accessibility Settings">
+            <button class="icon-btn-ghost" id="loginA11yBtn" title="Quick Accessibility Settings"
+              aria-label="Quick Accessibility Settings">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="3"></circle>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                <path
+                  d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                </path>
               </svg>
             </button>
           </div>
@@ -87,18 +98,22 @@
                 </svg>
                 <input class="input-field" type="password" id="loginPassword" value="CalmFocus2026!" required>
                 <!-- Accessible Password Reveal Toggle -->
-                <button type="button" class="input-icon-trailing" id="togglePasswordBtn" title="Show or hide password" aria-label="Show password">
-                  <svg id="eyeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <button type="button" class="input-icon-trailing" id="togglePasswordBtn" title="Show or hide password"
+                  aria-label="Show password">
+                  <svg id="eyeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
                     <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
                     <circle cx="12" cy="12" r="3"></circle>
                   </svg>
                 </button>
               </div>
-              <div id="loginPasswordError" class="form-error-msg" style="display: none; color: #C2410C; font-size: 13px; margin-top: 6px; font-weight: 600;"></div>
+              <div id="loginPasswordError" class="form-error-msg"
+                style="display: none; color: #C2410C; font-size: 13px; margin-top: 6px; font-weight: 600;"></div>
             </div>
 
             <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
-              <button type="button" class="header-link-label" style="text-transform: none; font-size: 14px;" onclick="window.showToast('Password reset link sent to student inbox!')">
+              <button type="button" class="header-link-label" style="text-transform: none; font-size: 14px;"
+                onclick="window.showToast('Password reset link sent to student inbox!')">
                 Forgot password?
               </button>
             </div>
@@ -113,19 +128,22 @@
               <div style="flex: 1; height: 1px; background: var(--border-color);"></div>
             </div>
 
-            <button type="button" class="btn-secondary" style="margin-bottom: 8px;" onclick="window.handleGoogleAuth(false)">
+            <button type="button" class="btn-secondary" style="margin-bottom: 8px;"
+              onclick="window.handleGoogleAuth(false)">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"></circle>
                 <path d="m9 12 2 2 4-4"></path>
               </svg>
               <span>Continue with Google</span>
             </button>
-            <div id="loginGoogleError" class="form-error-msg" style="display: none; text-align: center; margin-bottom: 14px;">
+            <div id="loginGoogleError" class="form-error-msg"
+              style="display: none; text-align: center; margin-bottom: 14px;">
               Google Sign-In is unavailable in this prototype. Please use email.
             </div>
 
             <p style="text-align: center; font-size: 14px; color: var(--text-muted);">
-              New here? <button type="button" class="header-link-label" style="text-transform: none; font-size: 14px;" onclick="window.navigateTo('signup')">Sign up</button>
+              New here? <button type="button" class="header-link-label" style="text-transform: none; font-size: 14px;"
+                onclick="window.navigateTo('signup')">Sign up</button>
             </p>
           </form>
         </section>
@@ -138,12 +156,17 @@
           <div class="brand-header">
             <div class="brand-logo">
               <svg viewBox="0 0 24 24">
-                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2Z" stroke-width="2"/>
-                <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2Z" stroke-width="2"/>
+                <path
+                  d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2Z"
+                  stroke-width="2" />
+                <path
+                  d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2Z"
+                  stroke-width="2" />
               </svg>
               <span>NeuroFlow</span>
             </div>
-            <button class="icon-btn-ghost" onclick="window.navigateTo('login')" title="Back to Login" aria-label="Back to Login">
+            <button class="icon-btn-ghost" onclick="window.navigateTo('login')" title="Back to Login"
+              aria-label="Back to Login">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="19" y1="12" x2="5" y2="12"></line>
                 <polyline points="12 19 5 12 12 5"></polyline>
@@ -166,7 +189,8 @@
                   <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
                   <circle cx="12" cy="7" r="4"></circle>
                 </svg>
-                <input class="input-field" type="text" id="signupName" placeholder="Alex Morgan" value="Alex Morgan" required>
+                <input class="input-field" type="text" id="signupName" placeholder="Alex Morgan" value="Alex Morgan"
+                  required>
               </div>
             </div>
 
@@ -177,7 +201,8 @@
                   <rect width="20" height="16" x="2" y="4" rx="2"></rect>
                   <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                 </svg>
-                <input class="input-field" type="email" id="signupEmail" placeholder="alex@university.edu" value="alex@university.edu" required>
+                <input class="input-field" type="email" id="signupEmail" placeholder="alex@university.edu"
+                  value="alex@university.edu" required>
               </div>
             </div>
 
@@ -188,15 +213,19 @@
                   <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
                   <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                 </svg>
-                <input class="input-field" type="password" id="signupPassword" placeholder="Minimum 6 characters" value="CalmFocus2026!" required>
-                <button type="button" class="input-icon-trailing" id="toggleSignupPasswordBtn" title="Show or hide password" aria-label="Show password">
-                  <svg id="signupEyeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <input class="input-field" type="password" id="signupPassword" placeholder="Minimum 6 characters"
+                  value="CalmFocus2026!" required>
+                <button type="button" class="input-icon-trailing" id="toggleSignupPasswordBtn"
+                  title="Show or hide password" aria-label="Show password">
+                  <svg id="signupEyeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
                     <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
                     <circle cx="12" cy="12" r="3"></circle>
                   </svg>
                 </button>
               </div>
-              <div id="signupPasswordError" class="form-error-msg" style="display: none; color: #C2410C; font-size: 13px; margin-top: 6px; font-weight: 600;"></div>
+              <div id="signupPasswordError" class="form-error-msg"
+                style="display: none; color: #C2410C; font-size: 13px; margin-top: 6px; font-weight: 600;"></div>
             </div>
 
             <button type="submit" class="btn-primary" style="margin-top: 10px; margin-bottom: 14px;">
@@ -209,19 +238,22 @@
               <div style="flex: 1; height: 1px; background: var(--border-color);"></div>
             </div>
 
-            <button type="button" class="btn-secondary" style="margin-bottom: 8px;" onclick="window.handleGoogleAuth(true)">
+            <button type="button" class="btn-secondary" style="margin-bottom: 8px;"
+              onclick="window.handleGoogleAuth(true)">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"></circle>
                 <path d="m9 12 2 2 4-4"></path>
               </svg>
               <span>Sign up with Google</span>
             </button>
-            <div id="signupGoogleError" class="form-error-msg" style="display: none; text-align: center; margin-bottom: 14px;">
+            <div id="signupGoogleError" class="form-error-msg"
+              style="display: none; text-align: center; margin-bottom: 14px;">
               Google Sign-Up is unavailable in this prototype. Please use email registration.
             </div>
 
             <p style="text-align: center; font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">
-              Already have an account? <button type="button" class="header-link-label" style="text-transform: none; font-size: 14px;" onclick="window.navigateTo('login')">Log In</button>
+              Already have an account? <button type="button" class="header-link-label"
+                style="text-transform: none; font-size: 14px;" onclick="window.navigateTo('login')">Log In</button>
             </p>
           </form>
         </section>
@@ -234,12 +266,17 @@
           <div class="brand-header">
             <div class="brand-logo">
               <svg viewBox="0 0 24 24">
-                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2Z" stroke-width="2"/>
-                <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2Z" stroke-width="2"/>
+                <path
+                  d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2Z"
+                  stroke-width="2" />
+                <path
+                  d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2Z"
+                  stroke-width="2" />
               </svg>
               <span>NeuroFlow</span>
             </div>
-            <button class="icon-btn-ghost" onclick="window.navigateTo('profile')" title="Profile & Settings" aria-label="Profile and Settings">
+            <button class="icon-btn-ghost" onclick="window.navigateTo('profile')" title="Profile & Settings"
+              aria-label="Profile and Settings">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
@@ -257,7 +294,8 @@
               <span class="card-title-eyebrow">DAILY PROGRESS</span>
               <span class="card-value-fraction" id="homeProgressFraction">0 / 3</span>
             </div>
-            <div class="progress-segments-bar" id="homeProgressSegments" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0">
+            <div class="progress-segments-bar" id="homeProgressSegments" role="progressbar" aria-valuemin="0"
+              aria-valuemax="3" aria-valuenow="0">
               <div class="progress-segment"></div>
               <div class="progress-segment"></div>
               <div class="progress-segment"></div>
@@ -296,7 +334,8 @@
           </button>
 
           <!-- Affirmative Positive Feedback -->
-          <p style="text-align: center; margin: 24px 0 12px; font-size: 14px; color: var(--primary-teal); font-weight: 600;">
+          <p
+            style="text-align: center; margin: 24px 0 12px; font-size: 14px; color: var(--primary-teal); font-weight: 600;">
             You made progress today 🌱
           </p>
         </section>
@@ -309,12 +348,17 @@
           <div class="brand-header">
             <div class="brand-logo">
               <svg viewBox="0 0 24 24">
-                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2Z" stroke-width="2"/>
-                <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2Z" stroke-width="2"/>
+                <path
+                  d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2Z"
+                  stroke-width="2" />
+                <path
+                  d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2Z"
+                  stroke-width="2" />
               </svg>
               <span>NeuroFlow</span>
             </div>
-            <button class="icon-btn-ghost" onclick="window.openModal('addTaskModal')" title="New Task" aria-label="Add new task">
+            <button class="icon-btn-ghost" onclick="window.openModal('addTaskModal')" title="New Task"
+              aria-label="Add new task">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -326,9 +370,12 @@
 
           <!-- Segmented Tab Bar (WCAG High Contrast) -->
           <nav class="segmented-tab-bar" aria-label="Task Filter Tabs">
-            <button class="segment-tab-btn active" data-tab="today" onclick="window.switchTaskTab('today')">Today</button>
-            <button class="segment-tab-btn" data-tab="upcoming" onclick="window.switchTaskTab('upcoming')">Upcoming</button>
-            <button class="segment-tab-btn" data-tab="completed" onclick="window.switchTaskTab('completed')">Completed</button>
+            <button class="segment-tab-btn active" data-tab="today"
+              onclick="window.switchTaskTab('today')">Today</button>
+            <button class="segment-tab-btn" data-tab="upcoming"
+              onclick="window.switchTaskTab('upcoming')">Upcoming</button>
+            <button class="segment-tab-btn" data-tab="completed"
+              onclick="window.switchTaskTab('completed')">Completed</button>
           </nav>
 
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
@@ -355,7 +402,8 @@
         <!-- ========================================== -->
         <section class="app-screen" id="screen-focus" aria-labelledby="focusHeading">
           <div class="brand-header">
-            <button class="header-link-label" onclick="window.exitFocusMode()" style="display: flex; align-items: center; gap: 4px; text-transform: none; font-size: 15px;">
+            <button class="header-link-label" onclick="window.exitFocusMode()"
+              style="display: flex; align-items: center; gap: 4px; text-transform: none; font-size: 15px;">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <line x1="19" y1="12" x2="5" y2="12"></line>
                 <polyline points="12 19 5 12 12 5"></polyline>
@@ -366,7 +414,8 @@
               <span>NeuroFlow</span>
             </div>
             <!-- Timer Type Switcher (Depleting Disk vs Digits) -->
-            <button class="icon-btn-ghost" id="timerModeToggle" onclick="window.toggleTimerVisualMode()" title="Toggle Visual Analog Ring / Digital Numbers" aria-label="Toggle Analog and Digital Timer">
+            <button class="icon-btn-ghost" id="timerModeToggle" onclick="window.toggleTimerVisualMode()"
+              title="Toggle Visual Analog Ring / Digital Numbers" aria-label="Toggle Analog and Digital Timer">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"></circle>
                 <polyline points="12 6 12 12 16 14"></polyline>
@@ -376,7 +425,8 @@
 
           <div class="screen-breadcrumbs" id="focusHeading">FOCUS MODE</div>
           <div class="card-title-eyebrow" style="margin-top: 8px;">CURRENT TASK</div>
-          <h2 style="font-size: 22px; font-weight: 700; color: var(--text-main); margin-bottom: 14px;" id="focusTaskName">
+          <h2 style="font-size: 22px; font-weight: 700; color: var(--text-main); margin-bottom: 14px;"
+            id="focusTaskName">
             DBMS Assignment
           </h2>
 
@@ -391,7 +441,8 @@
             <div id="visualTimerBox" style="display: none;" class="visual-timer-container">
               <svg class="timer-circle-svg" width="160" height="160" viewBox="0 0 160 160">
                 <circle class="timer-circle-bg" cx="80" cy="80" r="68"></circle>
-                <circle class="timer-circle-progress" id="timerCircleProgress" cx="80" cy="80" r="68" stroke-dasharray="427.26" stroke-dashoffset="30"></circle>
+                <circle class="timer-circle-progress" id="timerCircleProgress" cx="80" cy="80" r="68"
+                  stroke-dasharray="427.26" stroke-dashoffset="30"></circle>
               </svg>
               <div style="font-size: 20px; font-weight: 700; margin-top: 8px;" id="visualTimerDigits">24:32</div>
             </div>
@@ -410,14 +461,16 @@
 
           <!-- Current Step Display -->
           <div class="card-title-eyebrow">CURRENT STEP</div>
-          <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px; margin-bottom: 16px;">
+          <div
+            style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px; margin-bottom: 16px;">
             <p style="font-size: 17px; font-weight: 700; color: var(--text-main);" id="focusStepTitle">
               Write the introduction
             </p>
           </div>
 
           <!-- Primary Actions -->
-          <button class="btn-primary" id="focusCompleteStepBtn" onclick="window.completeFocusStep()" style="margin-bottom: 10px;">
+          <button class="btn-primary" id="focusCompleteStepBtn" onclick="window.completeFocusStep()"
+            style="margin-bottom: 10px;">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
@@ -444,7 +497,9 @@
 
             <button class="btn-secondary" onclick="window.openModal('stuckModal')">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+                <path
+                  d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
+                </path>
               </svg>
               <span>I'm stuck?</span>
             </button>
@@ -463,23 +518,70 @@
           <div class="brand-header">
             <div class="brand-logo">
               <svg viewBox="0 0 24 24">
-                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2Z" stroke-width="2"/>
-                <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2Z" stroke-width="2"/>
+                <path
+                  d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2Z"
+                  stroke-width="2" />
+                <path
+                  d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2Z"
+                  stroke-width="2" />
               </svg>
               <span>NeuroFlow</span>
             </div>
-            <button class="header-link-label" onclick="window.selectCalendarDay(23)">TODAY</button>
+            <button class="header-link-label" onclick="window.jumpToCalendarToday()" title="Jump to today's schedule">TODAY</button>
           </div>
 
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <h1 class="screen-title-large" id="calendarHeading" style="font-size: 22px; margin: 0;">September 2026</h1>
-            <button class="btn-primary" style="width: auto; min-height: 36px; padding: 0 14px; font-size: 13px;" onclick="window.openModal('addEventModal')">
+          <!-- Calendar Header with Clickable Month-Year Dropdown & Datepicker Popover -->
+          <div class="calendar-header-controls" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; position: relative;">
+            <div style="position: relative;">
+              <!-- Trigger: Month & Year with Chevron Dropdown Indicator -->
+              <button type="button" class="calendar-dropdown-trigger" id="calendarDropdownTrigger" onclick="window.toggleCalendarDropdown()" aria-expanded="false" aria-haspopup="dialog" title="Click to view month calendar">
+                <h1 class="screen-title-large" id="calendarHeading" style="font-size: 22px; margin: 0; display: inline-block;">September 2026</h1>
+                <svg class="dropdown-chevron-icon" id="calendarDropdownChevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </button>
+
+              <!-- Month Calendar Datepicker Dropdown (Matches User Reference Image) -->
+              <div class="calendar-datepicker-dropdown" id="calendarDatePickerDropdown" style="display: none;" role="dialog" aria-label="Calendar month date picker">
+                <!-- Header: « Month Year » -->
+                <div class="picker-header">
+                  <button type="button" class="picker-nav-btn" onclick="window.navigatePickerMonth(-1)" title="Previous month" aria-label="Previous month">«</button>
+                  <span class="picker-month-title" id="pickerMonthTitle">September 2026</span>
+                  <button type="button" class="picker-nav-btn" onclick="window.navigatePickerMonth(1)" title="Next month" aria-label="Next month">»</button>
+                </div>
+
+                <!-- Day Headers: S M T W T F S -->
+                <div class="picker-weekdays-row">
+                  <span>S</span>
+                  <span>M</span>
+                  <span>T</span>
+                  <span>W</span>
+                  <span>T</span>
+                  <span>F</span>
+                  <span>S</span>
+                </div>
+
+                <!-- 7-Column Date Number Grid -->
+                <div class="picker-days-grid" id="pickerDaysGrid">
+                  <!-- Dynamically rendered via app.js -->
+                </div>
+
+                <!-- Footer Quick Actions -->
+                <div class="picker-footer">
+                  <button type="button" class="picker-footer-btn" onclick="window.jumpToCalendarToday()">Today</button>
+                  <button type="button" class="picker-footer-btn secondary" onclick="window.closeCalendarDropdown()">Close</button>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn-primary" style="width: auto; min-height: 36px; padding: 0 14px; font-size: 13px;"
+              onclick="window.openModal('addEventModal')">
               + Add Event
             </button>
           </div>
 
-          <!-- Accessible Rolling 5-Day Strip (Eliminates Tiny Month Grid) -->
-          <nav class="calendar-rolling-strip" aria-label="5-Day Date Selector">
+          <!-- Accessible Rolling 5-Day Strip -->
+          <nav class="calendar-rolling-strip" id="calendarRollingStrip" aria-label="5-Day Date Selector">
             <div class="calendar-day-pill" onclick="window.selectCalendarDay(21)">
               <div class="day-pill-name">Mon</div>
               <div class="day-pill-num">21</div>
@@ -503,13 +605,13 @@
           </nav>
 
           <!-- Up Next Highlight Card -->
-          <article class="card card-next-step" style="margin-bottom: 16px;">
+          <article class="card card-next-step" id="calendarUpNextCard" style="margin-bottom: 16px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
               <span class="card-title-eyebrow">UP NEXT</span>
-              <span style="font-size: 12px; font-weight: 700; color: var(--primary-teal);">In 25 min</span>
+              <span style="font-size: 12px; font-weight: 700; color: var(--primary-teal);" id="calendarUpNextBadge">In 25 min</span>
             </div>
-            <div style="font-size: 18px; font-weight: 700; color: var(--text-main);">09:00 — Lecture</div>
-            <div style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">Tech Block 2, Room 304</div>
+            <div style="font-size: 18px; font-weight: 700; color: var(--text-main);" id="calendarUpNextTitle">09:00 — Lecture</div>
+            <div style="font-size: 13px; color: var(--text-muted); margin-top: 2px;" id="calendarUpNextSub">Tech Block 2, Room 304</div>
           </article>
 
           <!-- Semantic Key / Filter Legend -->
@@ -523,8 +625,8 @@
           </div>
 
           <!-- Vertical Timeline with Error Fixes -->
-          <div class="card-title-eyebrow" style="margin-bottom: 10px;">TODAY'S TIMELINE</div>
-          <div class="timeline-list">
+          <div class="card-title-eyebrow" id="calendarTimelineEyebrow" style="margin-bottom: 10px;">TODAY'S TIMELINE</div>
+          <div class="timeline-list" id="calendarTimelineList">
             <div class="timeline-item">
               <div class="timeline-node"></div>
               <span class="timeline-time">09:00</span>
@@ -589,11 +691,13 @@
 
           <!-- Automated Plan Confirmation Card -->
           <article class="card" style="background: var(--bg-card-subtle); margin-top: 14px;">
-            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--primary-teal); margin-bottom: 4px;">
+            <div
+              style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--primary-teal); margin-bottom: 4px;">
               PLAN CONFIRMED
             </div>
             <p style="font-size: 13px; color: var(--text-muted); line-height: 1.4;">
-              You have 4 tasks and 2 classes today. NeuroFlow arranged your tasks around your schedule and added two short recovery breaks.
+              You have 4 tasks and 2 classes today. NeuroFlow arranged your tasks around your schedule and added two
+              short recovery breaks.
             </p>
           </article>
         </section>
@@ -606,15 +710,20 @@
           <div class="brand-header">
             <div class="brand-logo">
               <svg viewBox="0 0 24 24">
-                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2Z" stroke-width="2"/>
-                <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2Z" stroke-width="2"/>
+                <path
+                  d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2Z"
+                  stroke-width="2" />
+                <path
+                  d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2Z"
+                  stroke-width="2" />
               </svg>
               <span>NeuroFlow</span>
             </div>
           </div>
 
           <div class="screen-breadcrumbs">PROFILE</div>
-          <h1 class="screen-title-large" id="profileHeading" style="font-size: 22px;">Make NeuroFlow work better for you.</h1>
+          <h1 class="screen-title-large" id="profileHeading" style="font-size: 22px;">Make NeuroFlow work better for
+            you.</h1>
 
           <!-- User Card -->
           <article class="card" style="margin-bottom: 20px;">
@@ -629,17 +738,22 @@
             <label class="form-label" for="fontSizeValueDisplay">Font Size</label>
             <div class="card" style="padding: 14px; margin-bottom: 6px;">
               <!-- Live Font Preview Box -->
-              <div class="font-preview-box" id="fontPreviewBox" style="background: var(--bg-card-subtle); border: 1px dashed var(--border-color); border-radius: var(--radius-md); padding: 14px 12px; text-align: center; margin-bottom: 12px; transition: all 0.2s ease;">
-                <div id="fontPreviewGlyph" style="font-size: calc(24px * var(--font-scale, 1)); font-weight: 700; color: var(--primary-teal);">
+              <div class="font-preview-box" id="fontPreviewBox"
+                style="background: var(--bg-card-subtle); border: 1px dashed var(--border-color); border-radius: var(--radius-md); padding: 14px 12px; text-align: center; margin-bottom: 12px; transition: all 0.2s ease;">
+                <div id="fontPreviewGlyph"
+                  style="font-size: calc(24px * var(--font-scale, 1)); font-weight: 700; color: var(--primary-teal);">
                   Aa (16px)
                 </div>
               </div>
 
               <!-- Only Font Preview and +/- Stepper Buttons -->
               <div class="stepper-controls" style="justify-content: center; gap: 16px;">
-                <button type="button" class="stepper-btn" id="fontSizeMinusBtn" onclick="window.adjustFontSize(-1)" title="Decrease font size across all pages" aria-label="Decrease font size">−</button>
-                <span class="stepper-value" id="fontSizeValueDisplay" style="min-width: 80px; text-align: center; font-size: 15px;">16px</span>
-                <button type="button" class="stepper-btn" id="fontSizePlusBtn" onclick="window.adjustFontSize(1)" title="Increase font size across all pages" aria-label="Increase font size">+</button>
+                <button type="button" class="stepper-btn" id="fontSizeMinusBtn" onclick="window.adjustFontSize(-1)"
+                  title="Decrease font size across all pages" aria-label="Decrease font size">−</button>
+                <span class="stepper-value" id="fontSizeValueDisplay"
+                  style="min-width: 80px; text-align: center; font-size: 15px;">16px</span>
+                <button type="button" class="stepper-btn" id="fontSizePlusBtn" onclick="window.adjustFontSize(1)"
+                  title="Increase font size across all pages" aria-label="Increase font size">+</button>
               </div>
             </div>
           </div>
@@ -647,7 +761,8 @@
           <div class="form-group">
             <label class="form-label">Typeface (Dyslexia Friendly)</label>
             <div class="pill-selector-group">
-              <button class="pref-pill-btn active" onclick="window.setFontFamily('Atkinson Hyperlegible', this)">Atkinson</button>
+              <button class="pref-pill-btn active"
+                onclick="window.setFontFamily('Atkinson Hyperlegible', this)">Atkinson</button>
               <button class="pref-pill-btn" onclick="window.setFontFamily('Lexend', this)">Lexend</button>
               <button class="pref-pill-btn" onclick="window.setFontFamily('Inter', this)">Default</button>
             </div>
@@ -664,7 +779,7 @@
 
           <!-- Focus Preferences Steppers -->
           <div class="card-title-eyebrow" style="margin: 18px 0 8px;">FOCUS PREFERENCES</div>
-          
+
           <div class="stepper-row">
             <div>
               <div style="font-weight: 700; font-size: 14px;">Focus duration</div>
@@ -703,39 +818,47 @@
           <!-- Accessibility Options Checkboxes with Explanations -->
           <div class="card-title-eyebrow" style="margin: 18px 0 8px;">ACCESSIBILITY OPTIONS</div>
           <div class="card" style="padding: 12px 16px;">
-            <label style="display: flex; align-items: center; justify-content: space-between; padding: 6px 0; cursor: pointer;">
+            <label
+              style="display: flex; align-items: center; justify-content: space-between; padding: 6px 0; cursor: pointer;">
               <div>
                 <div style="font-weight: 600; font-size: 14px;">Bionic Reading Mode</div>
-                <div style="font-size: 12px; color: var(--text-muted);">Bolds initial letters for dyslexia eye guidance</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Bolds initial letters for dyslexia eye guidance
+                </div>
               </div>
-              <input type="checkbox" id="bionicToggle" onchange="window.toggleBionicReading(this.checked)" style="width: 20px; height: 20px; accent-color: var(--primary-teal);">
+              <input type="checkbox" id="bionicToggle" onchange="window.toggleBionicReading(this.checked)"
+                style="width: 20px; height: 20px; accent-color: var(--primary-teal);">
             </label>
 
             <div style="height: 1px; background: var(--border-color); margin: 8px 0;"></div>
 
-            <label style="display: flex; align-items: center; justify-content: space-between; padding: 6px 0; cursor: pointer;">
+            <label
+              style="display: flex; align-items: center; justify-content: space-between; padding: 6px 0; cursor: pointer;">
               <div>
                 <div style="font-weight: 600; font-size: 14px;">Reduce animation</div>
                 <div style="font-size: 12px; color: var(--text-muted);">Disables motion for vestibular comfort</div>
               </div>
-              <input type="checkbox" id="reduceMotionToggle" style="width: 20px; height: 20px; accent-color: var(--primary-teal);">
+              <input type="checkbox" id="reduceMotionToggle"
+                style="width: 20px; height: 20px; accent-color: var(--primary-teal);">
             </label>
 
             <div style="height: 1px; background: var(--border-color); margin: 8px 0;"></div>
 
-            <label style="display: flex; align-items: center; justify-content: space-between; padding: 6px 0; cursor: pointer;">
+            <label
+              style="display: flex; align-items: center; justify-content: space-between; padding: 6px 0; cursor: pointer;">
               <div>
                 <div style="font-weight: 600; font-size: 14px;">Reduce visual clutter</div>
                 <div style="font-size: 12px; color: var(--text-muted);">Hides non-essential decorative elements</div>
               </div>
-              <input type="checkbox" id="reduceClutterToggle" style="width: 20px; height: 20px; accent-color: var(--primary-teal);">
+              <input type="checkbox" id="reduceClutterToggle"
+                style="width: 20px; height: 20px; accent-color: var(--primary-teal);">
             </label>
           </div>
 
           <button class="btn-primary" style="margin-top: 18px;" onclick="window.savePreferences()">
             Save Preferences
           </button>
-          <button class="btn-secondary" style="margin-top: 10px; margin-bottom: 24px;" onclick="window.navigateTo('login')">
+          <button class="btn-secondary" style="margin-top: 10px; margin-bottom: 24px;"
+            onclick="window.navigateTo('login')">
             Log out
           </button>
         </section>
@@ -748,40 +871,60 @@
       <!-- ========================================== -->
       <nav class="bottom-nav-bar" id="bottomNavBar" aria-label="Main Navigation">
         <button class="nav-tab-item active" data-screen="home" onclick="window.navigateTo('home')">
-          <svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <svg viewBox="0 0 24 24">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
           <span>Home</span>
         </button>
 
         <button class="nav-tab-item" data-screen="tasks" onclick="window.navigateTo('tasks')">
-          <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="m9 14 2 2 4-4"></path></svg>
+          <svg viewBox="0 0 24 24">
+            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+            <path d="m9 14 2 2 4-4"></path>
+          </svg>
           <span>Tasks</span>
         </button>
 
         <button class="nav-tab-item" data-screen="focus" onclick="window.navigateTo('focus')">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
           <span>Focus</span>
         </button>
 
         <button class="nav-tab-item" data-screen="calendar" onclick="window.navigateTo('calendar')">
-          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
           <span>Calendar</span>
         </button>
 
         <button class="nav-tab-item" data-screen="profile" onclick="window.navigateTo('profile')">
-          <svg viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <svg viewBox="0 0 24 24">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
           <span>Profile</span>
         </button>
       </nav>
 
       <!-- Floating "Feeling Overwhelmed?" Emergency Button -->
-      <button class="btn-overwhelm-float" id="overwhelmFloatBtn" onclick="window.openModal('overwhelmModal')" title="Emergency Calm Breathing & Micro-Step">
+      <button class="btn-overwhelm-float" id="overwhelmFloatBtn" onclick="window.openModal('overwhelmModal')"
+        title="Emergency Calm Breathing & Micro-Step">
         <span>Overwhelmed?</span>
       </button>
 
       <!-- Toast Notification Bar (Undo / Confirmation) -->
       <div class="toast-bar" id="toastBar" role="status" aria-live="polite">
         <span id="toastMessage">Action completed</span>
-        <button class="toast-undo-btn" id="toastUndoBtn" style="display: none;" onclick="window.undoLastAction()">Undo</button>
+        <button class="toast-undo-btn" id="toastUndoBtn" style="display: none;"
+          onclick="window.undoLastAction()">Undo</button>
       </div>
 
 
@@ -790,7 +933,8 @@
       <!-- ========================================== -->
 
       <!-- 1. Task Detail Sheet (Checklist, Break Down, Focus) -->
-      <div class="modal-overlay" id="taskDetailModal" onclick="if(event.target===this) window.closeModal('taskDetailModal')">
+      <div class="modal-overlay" id="taskDetailModal"
+        onclick="if(event.target===this) window.closeModal('taskDetailModal')">
         <div class="modal-sheet" role="dialog" aria-labelledby="detailTitle">
           <div class="modal-handle"></div>
           <div class="card-title-eyebrow">TASK DETAIL</div>
@@ -808,7 +952,8 @@
           </div>
 
           <!-- Generated Micro-Steps Box (When broken down) -->
-          <div id="smallerStepsContainer" style="display: none; background: #EDF6F5; border: 1px solid #CDE6E3; border-radius: var(--radius-md); padding: 14px; margin-bottom: 16px;">
+          <div id="smallerStepsContainer"
+            style="display: none; background: #EDF6F5; border: 1px solid #CDE6E3; border-radius: var(--radius-md); padding: 14px; margin-bottom: 16px;">
             <div style="font-weight: 700; font-size: 13px; color: var(--primary-teal); margin-bottom: 8px;">
               Smaller first steps (Generated by NeuroFlow AI)
             </div>
@@ -817,7 +962,8 @@
             </div>
           </div>
 
-          <button class="btn-secondary btn-lavender" id="breakTaskBtn" onclick="window.breakDownActiveTask()" style="margin-bottom: 10px;">
+          <button class="btn-secondary btn-lavender" id="breakTaskBtn" onclick="window.breakDownActiveTask()"
+            style="margin-bottom: 10px;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="m15 15 6 6m-6-6v4.5m0-4.5h4.5M9 9 3 3m6 6V4.5M9 9H4.5"></path>
             </svg>
@@ -841,13 +987,15 @@
           <div class="modal-handle"></div>
           <div class="modal-header-row">
             <h2 class="modal-title" id="addTaskTitle">Add New Task</h2>
-            <button class="icon-btn-ghost" onclick="window.closeModal('addTaskModal')" aria-label="Close modal">✕</button>
+            <button class="icon-btn-ghost" onclick="window.closeModal('addTaskModal')"
+              aria-label="Close modal">✕</button>
           </div>
 
           <form onsubmit="event.preventDefault(); window.submitNewTask();">
             <div class="form-group">
               <label class="form-label" for="newTaskTitle">Task title</label>
-              <input class="input-field" type="text" id="newTaskTitle" placeholder="e.g., Read Research Paper Chapter 2" required>
+              <input class="input-field" type="text" id="newTaskTitle" placeholder="e.g., Read Research Paper Chapter 2"
+                required>
             </div>
 
             <div class="form-group">
@@ -882,18 +1030,21 @@
       </div>
 
       <!-- 3. Add Event Sheet -->
-      <div class="modal-overlay" id="addEventModal" onclick="if(event.target===this) window.closeModal('addEventModal')">
+      <div class="modal-overlay" id="addEventModal"
+        onclick="if(event.target===this) window.closeModal('addEventModal')">
         <div class="modal-sheet" role="dialog" aria-labelledby="addEventTitle">
           <div class="modal-handle"></div>
           <div class="modal-header-row">
             <h2 class="modal-title" id="addEventTitle">Add Schedule Event</h2>
-            <button class="icon-btn-ghost" onclick="window.closeModal('addEventModal')" aria-label="Close modal">✕</button>
+            <button class="icon-btn-ghost" onclick="window.closeModal('addEventModal')"
+              aria-label="Close modal">✕</button>
           </div>
 
           <form onsubmit="event.preventDefault(); window.submitNewEvent();">
             <div class="form-group">
               <label class="form-label" for="newEventTitle">Event title</label>
-              <input class="input-field" type="text" id="newEventTitle" placeholder="e.g., HCI Group Presentation" required>
+              <input class="input-field" type="text" id="newEventTitle" placeholder="e.g., HCI Group Presentation"
+                required>
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
@@ -933,9 +1084,11 @@
             Getting stuck is natural. What feels right right now?
           </p>
 
-          <button class="btn-secondary btn-lavender" onclick="window.makeStepSmallerAction()" style="margin-bottom: 10px;">
+          <button class="btn-secondary btn-lavender" onclick="window.makeStepSmallerAction()"
+            style="margin-bottom: 10px;">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M4 14h6v6"></path><path d="M20 10h-6V4"></path>
+              <path d="M4 14h6v6"></path>
+              <path d="M20 10h-6V4"></path>
             </svg>
             <span>Make this step smaller (Micro-action)</span>
           </button>
@@ -959,7 +1112,8 @@
       </div>
 
       <!-- 5. Overwhelm / Freeze Reset Modal -->
-      <div class="modal-overlay" id="overwhelmModal" onclick="if(event.target===this) window.closeModal('overwhelmModal')">
+      <div class="modal-overlay" id="overwhelmModal"
+        onclick="if(event.target===this) window.closeModal('overwhelmModal')">
         <div class="modal-sheet" role="dialog" aria-labelledby="overwhelmTitle" style="text-align: center;">
           <div class="modal-handle"></div>
           <h2 class="modal-title" id="overwhelmTitle">Take a slow breath.</h2>
@@ -995,7 +1149,8 @@
           <div class="modal-handle"></div>
           <div class="modal-header-row">
             <h2 class="modal-title" id="ambientTitle">Calming Ambient Sound</h2>
-            <button class="icon-btn-ghost" onclick="window.closeModal('ambientModal')" aria-label="Close modal">✕</button>
+            <button class="icon-btn-ghost" onclick="window.closeModal('ambientModal')"
+              aria-label="Close modal">✕</button>
           </div>
           <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
             Generated on-device to calm anxiety and mask distracting auditory stimuli.
@@ -1016,7 +1171,8 @@
             </button>
           </div>
 
-          <button class="btn-secondary" style="margin-top: 8px;" onclick="window.closeModal('ambientModal')">Done</button>
+          <button class="btn-secondary" style="margin-top: 8px;"
+            onclick="window.closeModal('ambientModal')">Done</button>
         </div>
       </div>
 
@@ -1025,4 +1181,5 @@
 
   <script src="app.js"></script>
 </body>
+
 </html>

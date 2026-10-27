@@ -13,6 +13,17 @@
     selectedTask: null,
     lastDeletedTask: null,
     
+    // Calendar Navigation State
+    calendar: {
+      year: 2026,
+      month: 9, // 1-indexed (9 = September)
+      selectedDay: 23,
+      pickerYear: 2026,
+      pickerMonth: 9,
+      isOpen: false,
+      eventsByDate: {}
+    },
+
     // Focus Timer State
     timer: {
       interval: null,
@@ -211,7 +222,7 @@
       };
 
       const courseBadgeClass = task.course.toLowerCase().includes('class') ? 'badge-class' :
-                               task.course.toLowerCase().includes('dbms') ? 'badge-assign' : 'badge-personal';
+        task.course.toLowerCase().includes('dbms') ? 'badge-assign' : 'badge-personal';
 
       row.innerHTML = `
         <div class="custom-checkbox ${task.completed ? 'checked' : ''}" onclick="window.toggleTaskComplete('${task.id}', event)" title="Mark completed" role="checkbox" aria-checked="${task.completed}">
@@ -274,7 +285,7 @@
       };
 
       const courseBadgeClass = task.course.toLowerCase().includes('class') ? 'badge-class' :
-                               task.course.toLowerCase().includes('dbms') ? 'badge-assign' : 'badge-personal';
+        task.course.toLowerCase().includes('dbms') ? 'badge-assign' : 'badge-personal';
 
       row.innerHTML = `
         <div class="custom-checkbox ${task.completed ? 'checked' : ''}" onclick="window.toggleTaskComplete('${task.id}', event)" title="Toggle status">
@@ -440,11 +451,32 @@
   // --- Add Event Form Submission ---
   window.submitNewEvent = function () {
     const titleInput = document.getElementById('newEventTitle');
-    if (!titleInput.value.trim()) return;
+    const dateInput = document.getElementById('newEventDate');
+    const timeInput = document.getElementById('newEventTime');
+    const catInput = document.getElementById('newEventCategory');
+    if (!titleInput || !titleInput.value.trim()) return;
+
+    const eventTitle = titleInput.value.trim();
+    const eventDate = dateInput && dateInput.value ? dateInput.value : '2026-09-23';
+    const eventTime = timeInput && timeInput.value ? formatTimeString(timeInput.value) : '10:00 AM';
+    const eventCategory = catInput && catInput.value ? catInput.value : 'Class';
+
+    if (!state.calendar.eventsByDate[eventDate]) {
+      state.calendar.eventsByDate[eventDate] = [];
+    }
+    state.calendar.eventsByDate[eventDate].push({
+      title: eventTitle,
+      date: eventDate,
+      time: eventTime,
+      category: eventCategory
+    });
 
     titleInput.value = '';
     window.closeModal('addEventModal');
     window.showToast('Event saved to your schedule!');
+    if (typeof updateCalendarTimeline === 'function') {
+      updateCalendarTimeline(state.calendar.year, state.calendar.month, state.calendar.selectedDay);
+    }
   };
 
   // --- Focus Mode Timer Engine ---
@@ -580,14 +612,408 @@
     window.showToast('You took a gentle pause. That is progress.');
   };
 
-  // --- Calendar Date Selection ---
+  // --- Calendar Date, Month & Year Engine ---
+  const MONTH_NAMES = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+
+  function getDaysInMonth(year, month) {
+    return new Date(year, month, 0).getDate();
+  }
+
+  // --- Calendar Datepicker Popover Dropdown (Matches User Screenshot) ---
+  window.toggleCalendarDropdown = function () {
+    const dropdown = document.getElementById('calendarDatePickerDropdown');
+    const trigger = document.getElementById('calendarDropdownTrigger');
+    if (!dropdown) return;
+
+    state.calendar.isOpen = !state.calendar.isOpen;
+    if (state.calendar.isOpen) {
+      state.calendar.pickerYear = state.calendar.year;
+      state.calendar.pickerMonth = state.calendar.month;
+      window.renderCalendarPicker();
+      dropdown.style.display = 'block';
+      if (trigger) {
+        trigger.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    } else {
+      dropdown.style.display = 'none';
+      if (trigger) {
+        trigger.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+    }
+  };
+
+  window.closeCalendarDropdown = function () {
+    const dropdown = document.getElementById('calendarDatePickerDropdown');
+    const trigger = document.getElementById('calendarDropdownTrigger');
+    if (!dropdown) return;
+
+    state.calendar.isOpen = false;
+    dropdown.style.display = 'none';
+    if (trigger) {
+      trigger.classList.remove('open');
+      trigger.setAttribute('aria-expanded', 'false');
+    }
+  };
+
+  window.navigatePickerMonth = function (delta) {
+    let y = state.calendar.pickerYear;
+    let m = state.calendar.pickerMonth + delta;
+
+    if (m < 1) {
+      y--;
+      m = 12;
+    } else if (m > 12) {
+      y++;
+      m = 1;
+    }
+
+    state.calendar.pickerYear = y;
+    state.calendar.pickerMonth = m;
+    window.renderCalendarPicker();
+  };
+
+  window.renderCalendarPicker = function () {
+    const titleEl = document.getElementById('pickerMonthTitle');
+    const gridEl = document.getElementById('pickerDaysGrid');
+    if (!titleEl || !gridEl) return;
+
+    const pYear = state.calendar.pickerYear;
+    const pMonth = state.calendar.pickerMonth;
+
+    titleEl.textContent = `${MONTH_NAMES[pMonth - 1]} ${pYear}`;
+
+    // 0 = Sunday, 1 = Monday, ... 6 = Saturday (Matches S M T W T F S in image)
+    const firstDayIndex = new Date(pYear, pMonth - 1, 1).getDay();
+    const daysInCurrentMonth = getDaysInMonth(pYear, pMonth);
+    const prevMonthNum = pMonth - 1 < 1 ? 12 : pMonth - 1;
+    const prevYearNum = pMonth - 1 < 1 ? pYear - 1 : pYear;
+    const daysInPrevMonth = getDaysInMonth(prevYearNum, prevMonthNum);
+
+    let html = '';
+
+    // 1. Leading days from previous month (grayed out like 30, 31 in image)
+    const prevLeadingCount = firstDayIndex;
+    const startPrevDay = daysInPrevMonth - prevLeadingCount + 1;
+    for (let d = startPrevDay; d <= daysInPrevMonth; d++) {
+      html += `
+        <button type="button" class="picker-day-cell other-month" onclick="window.selectPickerDate(${prevYearNum}, ${prevMonthNum}, ${d})" title="${MONTH_NAMES[prevMonthNum - 1]} ${d}, ${prevYearNum}">
+          ${d}
+        </button>
+      `;
+    }
+
+    // 2. Current month days
+    for (let d = 1; d <= daysInCurrentMonth; d++) {
+      const isSelected = pYear === state.calendar.year && pMonth === state.calendar.month && d === state.calendar.selectedDay;
+      const isToday = pYear === 2026 && pMonth === 9 && d === 23;
+      const activeClass = isSelected ? 'active' : (isToday ? 'today' : '');
+
+      html += `
+        <button type="button" class="picker-day-cell ${activeClass}" onclick="window.selectPickerDate(${pYear}, ${pMonth}, ${d})" title="${MONTH_NAMES[pMonth - 1]} ${d}, ${pYear}">
+          ${d}
+        </button>
+      `;
+    }
+
+    // 3. Trailing days from next month (grayed out like 1, 2, 3 in image)
+    const totalFilledCells = prevLeadingCount + daysInCurrentMonth;
+    const totalCells = totalFilledCells > 35 ? 42 : 35;
+    const nextTrailingCount = totalCells - totalFilledCells;
+    const nextMonthNum = pMonth + 1 > 12 ? 1 : pMonth + 1;
+    const nextYearNum = pMonth + 1 > 12 ? pYear + 1 : pYear;
+
+    for (let d = 1; d <= nextTrailingCount; d++) {
+      html += `
+        <button type="button" class="picker-day-cell other-month" onclick="window.selectPickerDate(${nextYearNum}, ${nextMonthNum}, ${d})" title="${MONTH_NAMES[nextMonthNum - 1]} ${d}, ${nextYearNum}">
+          ${d}
+        </button>
+      `;
+    }
+
+    gridEl.innerHTML = html;
+  };
+
+  window.selectPickerDate = function (year, month, day) {
+    state.calendar.year = year;
+    state.calendar.month = month;
+    state.calendar.selectedDay = day;
+    state.calendar.pickerYear = year;
+    state.calendar.pickerMonth = month;
+
+    // Update heading text
+    const headingEl = document.getElementById('calendarHeading');
+    if (headingEl) {
+      headingEl.textContent = `${MONTH_NAMES[month - 1]} ${year}`;
+    }
+
+    // Close dropdown
+    window.closeCalendarDropdown();
+
+    // Re-render rolling 5-day strip and timeline
+    renderCalendarRollingStrip(year, month, day);
+    updateCalendarTimeline(year, month, day);
+
+    const monthShort = MONTH_NAMES[month - 1].slice(0, 3);
+    window.showToast(`Selected ${monthShort} ${day}, ${year}`);
+  };
+
+  // --- Dynamic Rolling 5-Day Strip ---
+  function renderCalendarRollingStrip(year, month, selectedDay) {
+    const stripEl = document.getElementById('calendarRollingStrip');
+    if (!stripEl) return;
+
+    const daysCount = getDaysInMonth(year, month);
+    if (selectedDay > daysCount) {
+      selectedDay = daysCount;
+      state.calendar.selectedDay = selectedDay;
+    }
+
+    let startDay;
+    if (year === 2026 && month === 9 && selectedDay === 23) {
+      startDay = 21; // Match design specs: [21, 22, 23, 24, 25]
+    } else {
+      startDay = Math.max(1, Math.min(daysCount - 4, selectedDay - 2));
+    }
+
+    let pillsHtml = '';
+    for (let i = 0; i < 5; i++) {
+      const d = startDay + i;
+      if (d > daysCount) break;
+
+      const dateObj = new Date(year, month - 1, d);
+      const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+      const isActive = d === selectedDay;
+
+      pillsHtml += `
+        <div class="calendar-day-pill ${isActive ? 'active' : ''}" onclick="window.selectCalendarDay(${d})" aria-label="${dayName} ${MONTH_NAMES[month - 1]} ${d}">
+          <div class="day-pill-name">${dayName}</div>
+          <div class="day-pill-num">${d}</div>
+        </div>
+      `;
+    }
+    stripEl.innerHTML = pillsHtml;
+  }
+
+  function getBadgeClass(cat) {
+    switch ((cat || '').toLowerCase()) {
+      case 'class': return 'badge-class';
+      case 'assignment': return 'badge-assign';
+      case 'exam': return 'badge-exam';
+      case 'rest': return 'badge-break';
+      default: return 'badge-personal';
+    }
+  }
+
+  function updateCalendarTimeline(year, month, day) {
+    const eyebrowEl = document.getElementById('calendarTimelineEyebrow');
+    const timelineListEl = document.getElementById('calendarTimelineList');
+    const upNextBadge = document.getElementById('calendarUpNextBadge');
+    const upNextTitle = document.getElementById('calendarUpNextTitle');
+    const upNextSub = document.getElementById('calendarUpNextSub');
+
+    const isToday = year === 2026 && month === 9 && day === 23;
+    const monthShort = MONTH_NAMES[month - 1].slice(0, 3);
+    const dateKey = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+
+    const newEventDateInput = document.getElementById('newEventDate');
+    if (newEventDateInput) {
+      newEventDateInput.value = dateKey;
+    }
+
+    if (eyebrowEl) {
+      eyebrowEl.textContent = isToday ? "TODAY'S TIMELINE" : `SCHEDULE FOR ${monthShort.toUpperCase()} ${day}, ${year}`;
+    }
+
+    if (isToday) {
+      if (upNextBadge) upNextBadge.textContent = "In 25 min";
+      if (upNextTitle) upNextTitle.textContent = "09:00 — Lecture";
+      if (upNextSub) upNextSub.textContent = "Tech Block 2, Room 304";
+
+      let defaultItemsHtml = `
+        <div class="timeline-item">
+          <div class="timeline-node"></div>
+          <span class="timeline-time">09:00</span>
+          <div class="timeline-content-card">
+            <div>
+              <div style="font-weight: 700; font-size: 14px;">Lecture: Database Systems</div>
+              <div style="font-size: 12px; color: var(--text-muted);">Prof. Miller</div>
+            </div>
+            <span class="badge-tag badge-class">Class</span>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-node"></div>
+          <span class="timeline-time">11:00</span>
+          <div class="timeline-content-card">
+            <div>
+              <div style="font-weight: 700; font-size: 14px;">Study: DBMS Queries</div>
+              <div style="font-size: 12px; color: var(--text-muted);">Library 2nd Floor</div>
+            </div>
+            <span class="badge-tag badge-assign">Assignment</span>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-node" style="border-color: #237A3D;"></div>
+          <span class="timeline-time">13:00</span>
+          <div class="timeline-content-card" style="background: #F4FAF5; border-color: #D3ECD9;">
+            <div>
+              <div style="font-weight: 700; font-size: 14px;">Lunch & Mindful Break</div>
+              <div style="font-size: 12px; color: #237A3D;">Walk outside, recharge mental battery</div>
+            </div>
+            <span class="badge-tag badge-break">Rest</span>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-node"></div>
+          <span class="timeline-time">14:00</span>
+          <div class="timeline-content-card">
+            <div>
+              <div style="font-weight: 700; font-size: 14px;">DBMS Practical Lab</div>
+              <div style="font-size: 12px; color: var(--text-muted);">Lab Complex 1</div>
+            </div>
+            <span class="badge-tag badge-class">Class</span>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-node"></div>
+          <span class="timeline-time">17:00</span>
+          <div class="timeline-content-card">
+            <div>
+              <div style="font-weight: 700; font-size: 14px;">Submit Project Draft</div>
+              <div style="font-size: 12px; color: var(--text-muted);">Student Portal</div>
+            </div>
+            <span class="badge-tag badge-personal">Personal</span>
+          </div>
+        </div>
+      `;
+
+      const customEvents = state.calendar.eventsByDate[dateKey] || [];
+      customEvents.forEach(evt => {
+        defaultItemsHtml += `
+          <div class="timeline-item">
+            <div class="timeline-node"></div>
+            <span class="timeline-time">${evt.time.split(' ')[0]}</span>
+            <div class="timeline-content-card">
+              <div>
+                <div style="font-weight: 700; font-size: 14px;">${evt.title}</div>
+                <div style="font-size: 12px; color: var(--text-muted);">${monthShort} ${day} schedule</div>
+              </div>
+              <span class="badge-tag ${getBadgeClass(evt.category)}">${evt.category}</span>
+            </div>
+          </div>
+        `;
+      });
+
+      if (timelineListEl) timelineListEl.innerHTML = defaultItemsHtml;
+      return;
+    }
+
+    // Schedule for other dates
+    if (upNextBadge) upNextBadge.textContent = "Planned";
+    if (upNextTitle) upNextTitle.textContent = "10:00 — Academic Session";
+    if (upNextSub) upNextSub.textContent = `Scheduled for ${monthShort} ${day}`;
+
+    let itemsHtml = `
+      <div class="timeline-item">
+        <div class="timeline-node"></div>
+        <span class="timeline-time">10:00</span>
+        <div class="timeline-content-card">
+          <div>
+            <div style="font-weight: 700; font-size: 14px;">Core Academic Session</div>
+            <div style="font-size: 12px; color: var(--text-muted);">Department Lecture Hall</div>
+          </div>
+          <span class="badge-tag badge-class">Class</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-node" style="border-color: #237A3D;"></div>
+        <span class="timeline-time">12:30</span>
+        <div class="timeline-content-card" style="background: #F4FAF5; border-color: #D3ECD9;">
+          <div>
+            <div style="font-weight: 700; font-size: 14px;">Mindful Rest & Lunch</div>
+            <div style="font-size: 12px; color: #237A3D;">Campus garden, gentle walk</div>
+          </div>
+          <span class="badge-tag badge-break">Rest</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-node"></div>
+        <span class="timeline-time">14:00</span>
+        <div class="timeline-content-card">
+          <div>
+            <div style="font-weight: 700; font-size: 14px;">Independent Study & Reading</div>
+            <div style="font-size: 12px; color: var(--text-muted);">Quiet Study Commons</div>
+          </div>
+          <span class="badge-tag badge-assign">Assignment</span>
+        </div>
+      </div>
+    `;
+
+    const customEvents = state.calendar.eventsByDate[dateKey] || [];
+    customEvents.forEach(evt => {
+      itemsHtml += `
+        <div class="timeline-item">
+          <div class="timeline-node"></div>
+          <span class="timeline-time">${evt.time.split(' ')[0]}</span>
+          <div class="timeline-content-card">
+            <div>
+              <div style="font-weight: 700; font-size: 14px;">${evt.title}</div>
+              <div style="font-size: 12px; color: var(--text-muted);">${monthShort} ${day} schedule</div>
+            </div>
+            <span class="badge-tag ${getBadgeClass(evt.category)}">${evt.category}</span>
+          </div>
+        </div>
+      `;
+    });
+
+    if (timelineListEl) timelineListEl.innerHTML = itemsHtml;
+  }
+
   window.selectCalendarDay = function (dayNum) {
+    state.calendar.selectedDay = dayNum;
+
     const pills = document.querySelectorAll('.calendar-day-pill');
     pills.forEach(p => {
-      const num = p.querySelector('.day-pill-num').textContent;
-      p.classList.toggle('active', num == dayNum);
+      const numEl = p.querySelector('.day-pill-num');
+      if (numEl) {
+        const num = parseInt(numEl.textContent, 10);
+        p.classList.toggle('active', num === dayNum);
+      }
     });
-    window.showToast(`Showing schedule for Sep ${dayNum}, 2026`);
+
+    updateCalendarTimeline(state.calendar.year, state.calendar.month, dayNum);
+
+    const monthShort = MONTH_NAMES[state.calendar.month - 1].slice(0, 3);
+    window.showToast(`Showing schedule for ${monthShort} ${dayNum}, ${state.calendar.year}`);
+  };
+
+  window.jumpToCalendarToday = function () {
+    state.calendar.year = 2026;
+    state.calendar.month = 9;
+    state.calendar.selectedDay = 23;
+    state.calendar.pickerYear = 2026;
+    state.calendar.pickerMonth = 9;
+
+    const headingEl = document.getElementById('calendarHeading');
+    if (headingEl) {
+      headingEl.textContent = 'September 2026';
+    }
+
+    window.closeCalendarDropdown();
+    renderCalendarRollingStrip(2026, 9, 23);
+    updateCalendarTimeline(2026, 9, 23);
+    window.showToast('Jumped to Today: Sep 23, 2026');
   };
 
   // --- Profile & Accessibility Controls: Dynamic Stepper & Font Scaling ---
@@ -639,7 +1065,7 @@
 
     try {
       localStorage.setItem('neuroflow_font_size', currentPx);
-    } catch (e) {}
+    } catch (e) { }
 
     if (showFeedback) {
       window.showToast(`Font size set to ${currentPx}px across all screens`);
@@ -897,7 +1323,7 @@
       try {
         state.audio.noiseNode.stop();
         state.audio.noiseNode.disconnect();
-      } catch (e) {}
+      } catch (e) { }
       state.audio.noiseNode = null;
     }
   }
@@ -933,6 +1359,22 @@
 
   // --- Onboarding / Init ---
   document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Calendar Rolling Strip and Datepicker
+    if (typeof renderCalendarRollingStrip === 'function') {
+      renderCalendarRollingStrip(state.calendar.year, state.calendar.month, state.calendar.selectedDay);
+    }
+
+    // Close calendar dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      const trigger = document.getElementById('calendarDropdownTrigger');
+      const dropdown = document.getElementById('calendarDatePickerDropdown');
+      if (dropdown && state.calendar && state.calendar.isOpen) {
+        if (!dropdown.contains(e.target) && !trigger.contains(e.target)) {
+          window.closeCalendarDropdown();
+        }
+      }
+    });
+
     // Apply saved or default font size immediately across all pages
     if (typeof applyFontScale === 'function') {
       applyFontScale(state.preferences.fontSizePx, false);
