@@ -44,9 +44,12 @@
     // Preferences & Accessibility
     preferences: {
       fontScale: 'normal',
+      fontSizePx: 16,
       fontFamily: 'Atkinson Hyperlegible',
       theme: 'light',
       bionicReading: false,
+      reduceMotion: false,
+      reduceClutter: false,
       focusDuration: 25,
       breakDuration: 5,
       reminderStyle: 'gentle'
@@ -133,16 +136,188 @@
   setInterval(updateLiveClock, 30000);
   updateLiveClock();
 
-  // --- Bionic Reading Transformer ---
+  // --- Bionic Reading Transformer & Universal DOM Engine ---
+  function formatBionicWord(w) {
+    if (!/[a-zA-Z]/.test(w)) return w;
+    const len = w.length;
+    let boldCount = 1;
+    if (len <= 3) boldCount = 1;
+    else if (len <= 5) boldCount = 2;
+    else if (len <= 7) boldCount = 3;
+    else if (len <= 9) boldCount = 4;
+    else boldCount = Math.ceil(len * 0.45);
+
+    const bold = w.slice(0, boldCount);
+    const rest = w.slice(boldCount);
+    return `<span class="bionic-bold">${bold}</span>${rest}`;
+  }
+
   function formatBionicText(text) {
-    if (!state.preferences.bionicReading) return text;
-    return text.split(' ').map(word => {
-      if (word.length <= 1) return word;
-      const mid = Math.ceil(word.length / 2);
-      const boldPart = word.slice(0, mid);
-      const rest = word.slice(mid);
-      return `<span class="bionic-bold">${boldPart}</span>${rest}`;
-    }).join(' ');
+    if (!text || typeof text !== 'string') return text;
+    // Strip existing bionic spans if present to ensure clean idempotency
+    const clean = text.replace(/<span class="bionic-bold">([^<]+)<\/span>/g, '$1');
+    const tokens = clean.split(/([a-zA-Z0-9'’]+)/);
+    return tokens.map(t => {
+      if (!/[a-zA-Z]/.test(t)) {
+        return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+      return formatBionicWord(t);
+    }).join('');
+  }
+
+  const BIONIC_EXCLUDE_TAGS = new Set([
+    'SCRIPT', 'STYLE', 'INPUT', 'TEXTAREA', 'SELECT', 'SVG', 'PATH', 'POLYGON', 'CIRCLE', 'LINE', 'RECT', 'CODE', 'PRE'
+  ]);
+
+  function collectTextNodes(root) {
+    const nodes = [];
+    function walk(node) {
+      if (!node) return;
+      if (node.nodeType === Node.TEXT_NODE) {
+        const text = node.textContent;
+        if (text && /[a-zA-Z]/.test(text)) {
+          const parent = node.parentElement;
+          if (parent &&
+              !BIONIC_EXCLUDE_TAGS.has(parent.tagName) &&
+              !parent.closest('.bionic-wrapper') &&
+              !parent.closest('.bionic-bold') &&
+              !parent.closest('.icon-btn-ghost') &&
+              !parent.closest('.stepper-btn') &&
+              !parent.closest('.custom-checkbox')) {
+            nodes.push(node);
+          }
+        }
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        if (BIONIC_EXCLUDE_TAGS.has(node.tagName)) return;
+        if (node.classList.contains('bionic-wrapper') || node.classList.contains('bionic-bold')) return;
+        if (node.classList.contains('icon-btn-ghost') || node.classList.contains('stepper-btn') || node.classList.contains('custom-checkbox')) return;
+        const children = node.childNodes;
+        for (let i = 0; i < children.length; i++) {
+          walk(children[i]);
+        }
+      }
+    }
+    walk(root);
+    return nodes;
+  }
+
+  let isBionicRunning = false;
+
+  function applyBionicReading(root) {
+    if (!state.preferences.bionicReading) return;
+    if (isBionicRunning) return;
+    isBionicRunning = true;
+    try {
+      if (!root) root = document.getElementById('appFrame') || document.body;
+      const textNodes = collectTextNodes(root);
+      textNodes.forEach(node => {
+        const text = node.textContent;
+        const parent = node.parentNode;
+        if (!parent) return;
+        const span = document.createElement('span');
+        span.className = 'bionic-wrapper';
+        span.setAttribute('data-bionic-original', text);
+        span.innerHTML = formatBionicText(text);
+        parent.replaceChild(span, node);
+      });
+    } finally {
+      isBionicRunning = false;
+    }
+  }
+
+  function removeBionicReading(root) {
+    if (isBionicRunning) return;
+    isBionicRunning = true;
+    try {
+      if (!root) root = document.getElementById('appFrame') || document.body;
+      const wrappers = root.querySelectorAll('.bionic-wrapper');
+      wrappers.forEach(wrap => {
+        const orig = wrap.getAttribute('data-bionic-original');
+        const text = (orig !== null && orig !== undefined) ? orig : wrap.textContent;
+        const textNode = document.createTextNode(text);
+        if (wrap.parentNode) {
+          wrap.parentNode.replaceChild(textNode, wrap);
+        }
+      });
+
+      const boldSpans = root.querySelectorAll('.bionic-bold');
+      boldSpans.forEach(b => {
+        const textNode = document.createTextNode(b.textContent);
+        if (b.parentNode) {
+          b.parentNode.replaceChild(textNode, b);
+        }
+      });
+
+      if (root.normalize) {
+        root.normalize();
+      }
+    } finally {
+      isBionicRunning = false;
+    }
+  }
+
+  let bionicObserver = null;
+  function initBionicObserver() {
+    if (typeof MutationObserver === 'undefined') return;
+    if (bionicObserver) return;
+    bionicObserver = new MutationObserver((mutations) => {
+      if (!state.preferences.bionicReading || isBionicRunning) return;
+      for (const m of mutations) {
+        if (m.type === 'childList') {
+          for (const added of m.addedNodes) {
+            if (added.nodeType === Node.ELEMENT_NODE) {
+              if (!added.classList.contains('bionic-wrapper') && !added.classList.contains('bionic-bold')) {
+                applyBionicReading(added);
+              }
+            } else if (added.nodeType === Node.TEXT_NODE) {
+              if (added.parentElement && !added.parentElement.closest('.bionic-wrapper')) {
+                applyBionicReading(added.parentElement);
+              }
+            }
+          }
+        }
+      }
+    });
+
+    const target = document.getElementById('appFrame') || document.body;
+    if (target) {
+      bionicObserver.observe(target, { childList: true, subtree: true });
+    }
+    if (document.body && target !== document.body) {
+      bionicObserver.observe(document.body, { childList: true, subtree: true });
+    }
+  }
+
+  function updateNextStepCard() {
+    const titleEl = document.getElementById('nextStepTitle');
+    const descEl = document.getElementById('nextStepActionDesc');
+    const rawTitle = 'DBMS Assignment';
+    const rawDesc = 'Step 2 of 4: Outline ER Diagram (~15 min)';
+    if (titleEl) {
+      titleEl.textContent = rawTitle;
+    }
+    if (descEl) {
+      descEl.textContent = rawDesc;
+    }
+    if (state.preferences.bionicReading) {
+      const card = document.querySelector('.next-step-card');
+      if (card) applyBionicReading(card);
+    }
+  }
+
+  function updateFocusDisplay() {
+    const taskNameEl = document.getElementById('focusTaskName');
+    const stepTitleEl = document.getElementById('focusStepTitle');
+    if (taskNameEl && state.timer.currentTaskName) {
+      taskNameEl.textContent = state.timer.currentTaskName;
+    }
+    if (stepTitleEl && state.timer.steps && state.timer.steps[state.timer.currentStepIndex]) {
+      stepTitleEl.textContent = state.timer.steps[state.timer.currentStepIndex];
+    }
+    if (state.preferences.bionicReading) {
+      const focusScreen = document.getElementById('screen-focus');
+      if (focusScreen) applyBionicReading(focusScreen);
+    }
   }
 
   // --- Navigation Engine ---
@@ -181,8 +356,16 @@
     }
 
     // Refresh contents
-    if (screenId === 'home') renderHomeTasks();
+    if (screenId === 'home') {
+      renderHomeTasks();
+      updateNextStepCard();
+    }
     if (screenId === 'tasks') renderMainTasks();
+    if (screenId === 'profile' && typeof syncProfileUI === 'function') syncProfileUI();
+
+    if (state.preferences.bionicReading) {
+      setTimeout(() => applyBionicReading(document.getElementById('appFrame') || document.body), 0);
+    }
   };
 
   // --- Task Rendering (Home Screen) ---
@@ -229,18 +412,22 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg>
         </div>
         <div class="task-info">
-          <span class="task-title-text">${formatBionicText(task.title)}</span>
+          <span class="task-title-text">${task.title}</span>
           <div class="task-meta-row">
             <span class="badge-tag ${courseBadgeClass}">${task.course}</span>
-            <span>·</span>
+            <span class="task-meta-dot">·</span>
             <span class="task-time-pill">Due ${task.due}</span>
-            <span>·</span>
+            <span class="task-meta-dot">·</span>
             <span class="task-time-pill">${task.duration}</span>
           </div>
         </div>
       `;
       container.appendChild(row);
     });
+
+    if (state.preferences.bionicReading) {
+      applyBionicReading(container);
+    }
   }
 
   // --- Task Rendering (Tasks Screen) ---
@@ -267,11 +454,15 @@
     if (filtered.length === 0) {
       container.innerHTML = `
         <div style="text-align: center; padding: 32px 16px; color: var(--text-muted);">
-          <div style="font-size: 28px; margin-bottom: 6px;">🌱</div>
+          <div style="font-size: 28px; margin-bottom: 6px;"><span class="clutter-emoji">🌱</span></div>
           <div style="font-weight: 700; font-size: 15px;">No tasks in this list</div>
           <div style="font-size: 13px; margin-top: 4px;">Take a well-deserved rest or add a new task when ready.</div>
         </div>
       `;
+      if (state.preferences.bionicReading) {
+        applyBionicReading(container);
+        if (headerEl) applyBionicReading(headerEl);
+      }
       return;
     }
 
@@ -292,19 +483,24 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg>
         </div>
         <div class="task-info">
-          <span class="task-title-text">${formatBionicText(task.title)}</span>
+          <span class="task-title-text">${task.title}</span>
           <div class="task-meta-row">
             <span class="badge-tag ${courseBadgeClass}">${task.course}</span>
-            <span>·</span>
-            <span>Due ${task.due}</span>
-            <span>·</span>
-            <span>${task.duration}</span>
+            <span class="task-meta-dot">·</span>
+            <span class="task-time-pill">Due ${task.due}</span>
+            <span class="task-meta-dot">·</span>
+            <span class="task-time-pill">${task.duration}</span>
           </div>
         </div>
         <button class="task-action-remove" onclick="window.deleteTaskSafely('${task.id}', event)" title="Delete task">Remove</button>
       `;
       container.appendChild(row);
     });
+
+    if (state.preferences.bionicReading) {
+      applyBionicReading(container);
+      if (headerEl) applyBionicReading(headerEl);
+    }
   }
 
   // --- Task Completion Toggle ---
@@ -399,6 +595,10 @@
       </div>
     `;
 
+    if (state.preferences.bionicReading) {
+      applyBionicReading(smallerList);
+    }
+
     window.showToast('AI broke task into 3 startable steps! 🪄');
   };
 
@@ -484,14 +684,20 @@
     state.timer.currentTaskName = taskName || 'DBMS Assignment';
     if (stepName) state.timer.steps[state.timer.currentStepIndex] = stepName;
 
-    document.getElementById('focusTaskName').textContent = state.timer.currentTaskName;
-    document.getElementById('focusStepTitle').textContent = state.timer.steps[state.timer.currentStepIndex];
+    const taskNameEl = document.getElementById('focusTaskName');
+    const stepTitleEl = document.getElementById('focusStepTitle');
+    if (taskNameEl) taskNameEl.textContent = state.timer.currentTaskName;
+    if (stepTitleEl) stepTitleEl.textContent = state.timer.steps[state.timer.currentStepIndex];
 
     state.timer.remainingSeconds = state.preferences.focusDuration * 60;
     state.timer.totalSeconds = state.timer.remainingSeconds;
     updateTimerVisuals();
 
     window.navigateTo('focus');
+    if (state.preferences.bionicReading) {
+      const focusScreen = document.getElementById('screen-focus');
+      if (focusScreen) applyBionicReading(focusScreen);
+    }
     window.startTimer();
   };
 
@@ -570,7 +776,13 @@
   window.completeFocusStep = function () {
     state.timer.currentStepIndex = (state.timer.currentStepIndex + 1) % state.timer.steps.length;
     const nextStep = state.timer.steps[state.timer.currentStepIndex];
-    document.getElementById('focusStepTitle').textContent = nextStep;
+    const stepEl = document.getElementById('focusStepTitle');
+    if (stepEl) {
+      stepEl.textContent = nextStep;
+      if (state.preferences.bionicReading) {
+        applyBionicReading(stepEl);
+      }
+    }
 
     const dashes = document.querySelectorAll('#focusStepDashes .step-dash');
     dashes.forEach((dash, idx) => {
@@ -582,6 +794,9 @@
     const stepCountEl = document.getElementById('focusStepCountText');
     if (stepCountEl) {
       stepCountEl.textContent = `Step ${state.timer.currentStepIndex + 1} of ${state.timer.steps.length}`;
+      if (state.preferences.bionicReading) {
+        applyBionicReading(stepCountEl);
+      }
     }
 
     window.showToast(`Step completed! Now: ${nextStep} 🎯`);
@@ -591,7 +806,13 @@
   window.makeStepSmallerAction = function () {
     window.closeModal('stuckModal');
     const current = state.timer.steps[state.timer.currentStepIndex];
-    document.getElementById('focusStepTitle').textContent = `Micro-step: Just read first sentence of "${current}"`;
+    const stepEl = document.getElementById('focusStepTitle');
+    if (stepEl) {
+      stepEl.textContent = `Micro-step: Just read first sentence of "${current}"`;
+      if (state.preferences.bionicReading) {
+        applyBionicReading(stepEl);
+      }
+    }
     window.showToast('Step simplified to a 2-minute micro-action!');
   };
 
@@ -797,6 +1018,9 @@
       `;
     }
     stripEl.innerHTML = pillsHtml;
+    if (state.preferences.bionicReading) {
+      applyBionicReading(stripEl);
+    }
   }
 
   function getBadgeClass(cat) {
@@ -827,12 +1051,16 @@
 
     if (eyebrowEl) {
       eyebrowEl.textContent = isToday ? "TODAY'S TIMELINE" : `SCHEDULE FOR ${monthShort.toUpperCase()} ${day}, ${year}`;
+      if (state.preferences.bionicReading) applyBionicReading(eyebrowEl);
     }
 
     if (isToday) {
       if (upNextBadge) upNextBadge.textContent = "In 25 min";
       if (upNextTitle) upNextTitle.textContent = "09:00 — Lecture";
       if (upNextSub) upNextSub.textContent = "Tech Block 2, Room 304";
+      if (state.preferences.bionicReading && upNextTitle) {
+        applyBionicReading(upNextTitle.parentElement);
+      }
 
       let defaultItemsHtml = `
         <div class="timeline-item">
@@ -913,7 +1141,12 @@
         `;
       });
 
-      if (timelineListEl) timelineListEl.innerHTML = defaultItemsHtml;
+      if (timelineListEl) {
+        timelineListEl.innerHTML = defaultItemsHtml;
+        if (state.preferences.bionicReading) {
+          applyBionicReading(timelineListEl);
+        }
+      }
       return;
     }
 
@@ -921,6 +1154,9 @@
     if (upNextBadge) upNextBadge.textContent = "Planned";
     if (upNextTitle) upNextTitle.textContent = "10:00 — Academic Session";
     if (upNextSub) upNextSub.textContent = `Scheduled for ${monthShort} ${day}`;
+    if (state.preferences.bionicReading && upNextTitle) {
+      applyBionicReading(upNextTitle.parentElement);
+    }
 
     let itemsHtml = `
       <div class="timeline-item">
@@ -977,7 +1213,12 @@
       `;
     });
 
-    if (timelineListEl) timelineListEl.innerHTML = itemsHtml;
+    if (timelineListEl) {
+      timelineListEl.innerHTML = itemsHtml;
+      if (state.preferences.bionicReading) {
+        applyBionicReading(timelineListEl);
+      }
+    }
   }
 
   window.selectCalendarDay = function (dayNum) {
@@ -1081,51 +1322,206 @@
 
   window.setFontFamily = function (family, btn) {
     state.preferences.fontFamily = family;
-    const btns = btn.parentElement.querySelectorAll('.pref-pill-btn');
-    btns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+    if (btn && btn.parentElement) {
+      const btns = btn.parentElement.querySelectorAll('.pref-pill-btn');
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
 
     document.documentElement.style.setProperty('--font-family', `'${family}', sans-serif`);
     window.showToast(`Applied ${family} font`);
+    savePreferencesToStorage();
   };
 
   window.setTheme = function (theme, btn) {
     state.preferences.theme = theme;
-    const btns = btn.parentElement.querySelectorAll('.pref-pill-btn');
-    btns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+    if (btn && btn.parentElement) {
+      const btns = btn.parentElement.querySelectorAll('.pref-pill-btn');
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
 
     document.documentElement.setAttribute('data-theme', theme);
     window.showToast(`Theme switched to ${theme.replace('-', ' ')}`);
+    savePreferencesToStorage();
   };
 
+  // --- Accessibility Options Toggles ---
   window.toggleBionicReading = function (checked) {
-    state.preferences.bionicReading = checked;
-    document.body.classList.toggle('bionic-reading', checked);
+    state.preferences.bionicReading = !!checked;
+    document.body.classList.toggle('bionic-reading', state.preferences.bionicReading);
+
+    const toggle = document.getElementById('bionicToggle');
+    if (toggle) toggle.checked = state.preferences.bionicReading;
+
+    const appFrame = document.getElementById('appFrame') || document.body;
+
+    // Refresh active screens & tasks
     renderHomeTasks();
     renderMainTasks();
-    window.showToast(checked ? 'Bionic reading active: Initial letters bolded' : 'Bionic reading disabled');
+    updateNextStepCard();
+    if (typeof updateCalendarTimeline === 'function') {
+      updateCalendarTimeline(state.calendar.year, state.calendar.month, state.calendar.selectedDay);
+    }
+    updateFocusDisplay();
+
+    if (state.preferences.bionicReading) {
+      applyBionicReading(document.body);
+    } else {
+      removeBionicReading(document.body);
+    }
+
+    window.showToast(state.preferences.bionicReading ? 'Bionic reading active: Initial letters bolded across workspace' : 'Bionic reading disabled');
+    savePreferencesToStorage();
+  };
+
+  window.toggleReduceMotion = function (checked) {
+    state.preferences.reduceMotion = !!checked;
+    document.body.classList.toggle('reduce-motion', state.preferences.reduceMotion);
+
+    const toggle = document.getElementById('reduceMotionToggle');
+    if (toggle) toggle.checked = state.preferences.reduceMotion;
+
+    window.showToast(state.preferences.reduceMotion ? 'Reduced motion active: Animations disabled for vestibular comfort' : 'Standard motion restored');
+    savePreferencesToStorage();
+  };
+
+  window.toggleReduceClutter = function (checked) {
+    state.preferences.reduceClutter = !!checked;
+    document.body.classList.toggle('reduce-clutter', state.preferences.reduceClutter);
+
+    const toggle = document.getElementById('reduceClutterToggle');
+    if (toggle) toggle.checked = state.preferences.reduceClutter;
+
+    renderHomeTasks();
+    renderMainTasks();
+
+    window.showToast(state.preferences.reduceClutter ? 'Visual clutter reduced: Non-essential decorative elements hidden' : 'Standard visual layout restored');
+    savePreferencesToStorage();
   };
 
   window.adjustDuration = function (type, change) {
     if (type === 'focus') {
       state.preferences.focusDuration = Math.max(5, Math.min(60, state.preferences.focusDuration + change));
-      document.getElementById('focusDurationValue').textContent = `${state.preferences.focusDuration} min`;
+      const el = document.getElementById('focusDurationValue');
+      if (el) el.textContent = `${state.preferences.focusDuration} min`;
     } else {
       state.preferences.breakDuration = Math.max(1, Math.min(20, state.preferences.breakDuration + change));
-      document.getElementById('breakDurationValue').textContent = `${state.preferences.breakDuration} min`;
+      const el = document.getElementById('breakDurationValue');
+      if (el) el.textContent = `${state.preferences.breakDuration} min`;
     }
+    savePreferencesToStorage();
   };
 
   window.setReminderStyle = function (style, btn) {
     state.preferences.reminderStyle = style;
-    const btns = btn.parentElement.querySelectorAll('.pref-pill-btn');
-    btns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+    if (btn && btn.parentElement) {
+      const btns = btn.parentElement.querySelectorAll('.pref-pill-btn');
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+    savePreferencesToStorage();
   };
 
+  function savePreferencesToStorage() {
+    const prefs = {
+      fontSizePx: state.preferences.fontSizePx,
+      fontFamily: state.preferences.fontFamily,
+      theme: state.preferences.theme,
+      bionicReading: !!state.preferences.bionicReading,
+      reduceMotion: !!state.preferences.reduceMotion,
+      reduceClutter: !!state.preferences.reduceClutter,
+      focusDuration: state.preferences.focusDuration,
+      breakDuration: state.preferences.breakDuration,
+      reminderStyle: state.preferences.reminderStyle
+    };
+    try {
+      localStorage.setItem('neuroflow_preferences', JSON.stringify(prefs));
+      localStorage.setItem('neuroflow_font_size', state.preferences.fontSizePx);
+    } catch (e) { }
+  }
+
+  function loadPreferencesFromStorage() {
+    try {
+      const raw = localStorage.getItem('neuroflow_preferences');
+      if (raw) {
+        const saved = JSON.parse(raw);
+        if (saved) {
+          if (typeof saved.bionicReading === 'boolean') state.preferences.bionicReading = saved.bionicReading;
+          if (typeof saved.reduceMotion === 'boolean') state.preferences.reduceMotion = saved.reduceMotion;
+          if (typeof saved.reduceClutter === 'boolean') state.preferences.reduceClutter = saved.reduceClutter;
+          if (saved.fontSizePx) state.preferences.fontSizePx = saved.fontSizePx;
+          if (saved.fontFamily) state.preferences.fontFamily = saved.fontFamily;
+          if (saved.theme) state.preferences.theme = saved.theme;
+          if (saved.focusDuration) state.preferences.focusDuration = saved.focusDuration;
+          if (saved.breakDuration) state.preferences.breakDuration = saved.breakDuration;
+          if (saved.reminderStyle) state.preferences.reminderStyle = saved.reminderStyle;
+        }
+      } else {
+        // Respect OS-level prefers-reduced-motion as smart accessible default
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          state.preferences.reduceMotion = true;
+        }
+      }
+    } catch (e) { }
+
+    // Apply classes to body
+    document.body.classList.toggle('bionic-reading', !!state.preferences.bionicReading);
+    document.body.classList.toggle('reduce-motion', !!state.preferences.reduceMotion);
+    document.body.classList.toggle('reduce-clutter', !!state.preferences.reduceClutter);
+
+    if (state.preferences.theme) {
+      document.documentElement.setAttribute('data-theme', state.preferences.theme);
+    }
+    if (state.preferences.fontFamily) {
+      document.documentElement.style.setProperty('--font-family', `'${state.preferences.fontFamily}', sans-serif`);
+    }
+
+    if (state.preferences.bionicReading) {
+      applyBionicReading(document.body);
+    }
+
+    syncProfileUI();
+  }
+
+  function syncProfileUI() {
+    // Sync checkboxes
+    const bionicToggle = document.getElementById('bionicToggle');
+    if (bionicToggle) bionicToggle.checked = !!state.preferences.bionicReading;
+
+    const reduceMotionToggle = document.getElementById('reduceMotionToggle');
+    if (reduceMotionToggle) reduceMotionToggle.checked = !!state.preferences.reduceMotion;
+
+    const reduceClutterToggle = document.getElementById('reduceClutterToggle');
+    if (reduceClutterToggle) reduceClutterToggle.checked = !!state.preferences.reduceClutter;
+
+    // Sync Steppers
+    const focusVal = document.getElementById('focusDurationValue');
+    if (focusVal) focusVal.textContent = `${state.preferences.focusDuration} min`;
+
+    const breakVal = document.getElementById('breakDurationValue');
+    if (breakVal) breakVal.textContent = `${state.preferences.breakDuration} min`;
+
+    const fontVal = document.getElementById('fontSizeValueDisplay');
+    if (fontVal) fontVal.textContent = `${state.preferences.fontSizePx}px`;
+
+    // Sync Pills
+    const allPrefBtns = document.querySelectorAll('#screen-profile .pref-pill-btn');
+    allPrefBtns.forEach(btn => {
+      const oc = btn.getAttribute('onclick') || '';
+      if (oc.includes('setFontFamily')) {
+        btn.classList.toggle('active', oc.includes(`'${state.preferences.fontFamily}'`));
+      } else if (oc.includes('setTheme')) {
+        btn.classList.toggle('active', oc.includes(`'${state.preferences.theme}'`));
+      } else if (oc.includes('setReminderStyle')) {
+        btn.classList.toggle('active', oc.includes(`'${state.preferences.reminderStyle}'`));
+      }
+    });
+  }
+
   window.savePreferences = function () {
-    window.showToast('Accessibility preferences saved successfully!');
+    savePreferencesToStorage();
+    window.showToast('Accessibility preferences saved successfully! ✓');
   };
 
   // --- Password Reveal Toggles ---
@@ -1331,7 +1727,12 @@
   // --- Modal Helpers ---
   window.openModal = function (modalId) {
     const modal = document.getElementById(modalId);
-    if (modal) modal.classList.add('active');
+    if (modal) {
+      modal.classList.add('active');
+      if (state.preferences.bionicReading) {
+        applyBionicReading(modal);
+      }
+    }
   };
 
   window.closeModal = function (modalId) {
@@ -1359,6 +1760,12 @@
 
   // --- Onboarding / Init ---
   document.addEventListener('DOMContentLoaded', () => {
+    // Load persisted accessibility preferences & options
+    loadPreferencesFromStorage();
+
+    // Start universal Bionic Reading observer
+    initBionicObserver();
+
     // Initialize Calendar Rolling Strip and Datepicker
     if (typeof renderCalendarRollingStrip === 'function') {
       renderCalendarRollingStrip(state.calendar.year, state.calendar.month, state.calendar.selectedDay);
@@ -1388,6 +1795,7 @@
 
     // Default start screen
     window.navigateTo('home');
+    updateNextStepCard();
   });
 
 })();

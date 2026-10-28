@@ -285,7 +285,7 @@
           </div>
 
           <div class="screen-breadcrumbs">HOME / TODAY</div>
-          <h1 class="screen-title-large" id="homeHeading">Good morning, Alex 👋</h1>
+          <h1 class="screen-title-large" id="homeHeading">Good morning, Alex <span class="clutter-emoji">👋</span></h1>
           <p class="screen-subtitle" id="homeSummarySub">3 tasks · 1 class · 1 focus session</p>
 
           <!-- Daily Progress Card (Fractional, Non-Punitive) -->
@@ -334,9 +334,9 @@
           </button>
 
           <!-- Affirmative Positive Feedback -->
-          <p
+          <p class="affirmation-footer"
             style="text-align: center; margin: 24px 0 12px; font-size: 14px; color: var(--primary-teal); font-weight: 600;">
-            You made progress today 🌱
+            You made progress today <span class="clutter-emoji">🌱</span>
           </p>
         </section>
 
@@ -505,7 +505,7 @@
             </button>
           </div>
 
-          <p style="text-align: center; margin-top: 18px; font-size: 13px; color: var(--text-muted);">
+          <p class="focus-decorative-sub" style="text-align: center; margin-top: 18px; font-size: 13px; color: var(--text-muted);">
             Next: 5 min break
           </p>
         </section>
@@ -615,13 +615,15 @@
           </article>
 
           <!-- Semantic Key / Filter Legend -->
-          <div class="card-title-eyebrow" style="margin-bottom: 8px;">SCHEDULE KEY</div>
-          <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px;">
-            <span class="badge-tag badge-class">● Class</span>
-            <span class="badge-tag badge-assign">◆ Assignment</span>
-            <span class="badge-tag badge-exam">■ Exam</span>
-            <span class="badge-tag badge-break">☕ Rest / Break</span>
-            <span class="badge-tag badge-personal">▲ Personal</span>
+          <div class="schedule-key-container">
+            <div class="card-title-eyebrow" style="margin-bottom: 8px;">SCHEDULE KEY</div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px;">
+              <span class="badge-tag badge-class">● Class</span>
+              <span class="badge-tag badge-assign">◆ Assignment</span>
+              <span class="badge-tag badge-exam">■ Exam</span>
+              <span class="badge-tag badge-break">☕ Rest / Break</span>
+              <span class="badge-tag badge-personal">▲ Personal</span>
+            </div>
           </div>
 
           <!-- Vertical Timeline with Error Fixes -->
@@ -837,7 +839,7 @@
                 <div style="font-weight: 600; font-size: 14px;">Reduce animation</div>
                 <div style="font-size: 12px; color: var(--text-muted);">Disables motion for vestibular comfort</div>
               </div>
-              <input type="checkbox" id="reduceMotionToggle"
+              <input type="checkbox" id="reduceMotionToggle" onchange="window.toggleReduceMotion(this.checked)"
                 style="width: 20px; height: 20px; accent-color: var(--primary-teal);">
             </label>
 
@@ -849,7 +851,7 @@
                 <div style="font-weight: 600; font-size: 14px;">Reduce visual clutter</div>
                 <div style="font-size: 12px; color: var(--text-muted);">Hides non-essential decorative elements</div>
               </div>
-              <input type="checkbox" id="reduceClutterToggle"
+              <input type="checkbox" id="reduceClutterToggle" onchange="window.toggleReduceClutter(this.checked)"
                 style="width: 20px; height: 20px; accent-color: var(--primary-teal);">
             </label>
           </div>

@@ -125,14 +125,168 @@ body {
   overflow-x: hidden;
 }
 
-/* Bionic Reading Highlighting */
+/* ==================================================== */
+/* BIONIC READING HIGHLIGHTING (Dyslexia Eye Guidance)  */
+/* ==================================================== */
+
 .bionic-reading .bionic-bold {
-  font-weight: 700;
-  color: var(--primary-teal-dark);
+  font-weight: 800 !important;
+  color: var(--primary-teal-dark, #0B4F43) !important;
+  letter-spacing: -0.01em;
+  display: inline !important;
 }
 
 [data-theme="dark"] .bionic-reading .bionic-bold {
-  color: #FFFFFF;
+  color: #5EEAD4 !important;
+  font-weight: 800 !important;
+}
+
+[data-theme="low-stimulation"] .bionic-reading .bionic-bold {
+  color: #113429 !important;
+  font-weight: 800 !important;
+}
+
+/* Base text contrast in Bionic Reading mode:
+   Force non-bold parts of text, headings, cards, and buttons to normal weight (400)
+   so initial bold syllables have maximum visual contrast for eye fixation */
+.bionic-reading .bionic-wrapper {
+  font-weight: 400 !important;
+  display: inline !important;
+}
+
+.bionic-reading h1,
+.bionic-reading h2,
+.bionic-reading h3,
+.bionic-reading h4,
+.bionic-reading .screen-title-large,
+.bionic-reading .modal-title,
+.bionic-reading .card-title-eyebrow,
+.bionic-reading .screen-breadcrumbs,
+.bionic-reading .form-label,
+.bionic-reading .task-title-text,
+.bionic-reading .next-step-title,
+.bionic-reading .btn-primary,
+.bionic-reading .btn-secondary,
+.bionic-reading .pref-pill-btn,
+.bionic-reading .nav-tab-item,
+.bionic-reading .badge-tag,
+.bionic-reading strong,
+.bionic-reading b,
+.bionic-reading [style*="font-weight"] {
+  font-weight: 400 !important;
+}
+
+/* Ensure .bionic-bold inside any element retains bold weight */
+.bionic-reading .bionic-bold,
+.bionic-reading [style*="font-weight"] .bionic-bold,
+.bionic-reading h1 .bionic-bold,
+.bionic-reading h2 .bionic-bold,
+.bionic-reading h3 .bionic-bold,
+.bionic-reading .screen-title-large .bionic-bold,
+.bionic-reading .modal-title .bionic-bold,
+.bionic-reading .task-title-text .bionic-bold,
+.bionic-reading .btn-primary .bionic-bold,
+.bionic-reading .btn-secondary .bionic-bold {
+  font-weight: 800 !important;
+}
+
+/* ==================================================== */
+/* REDUCE ANIMATION / VESTIBULAR COMFORT (WCAG 2.3.3)   */
+/* ==================================================== */
+body.reduce-motion,
+body.reduce-motion *,
+body.reduce-motion *::before,
+body.reduce-motion *::after {
+  animation-duration: 0.0001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.0001ms !important;
+  scroll-behavior: auto !important;
+}
+
+body.reduce-motion .breathing-bubble {
+  animation: none !important;
+  transform: none !important;
+}
+
+body.reduce-motion .calendar-datepicker-dropdown {
+  animation: none !important;
+}
+
+body.reduce-motion .modal-overlay,
+body.reduce-motion .modal-sheet {
+  transition: none !important;
+  animation: none !important;
+}
+
+body.reduce-motion .toast-bar {
+  transition: none !important;
+}
+
+body.reduce-motion .app-screen {
+  transition: none !important;
+  transform: none !important;
+}
+
+body.reduce-motion .progress-ring-circle {
+  transition: none !important;
+}
+
+body.reduce-motion .btn-primary:active,
+body.reduce-motion .btn-secondary:active,
+body.reduce-motion .stepper-btn:active,
+body.reduce-motion .task-row:hover,
+body.reduce-motion .btn-overwhelm-float:hover,
+body.reduce-motion .calendar-day-pill:hover {
+  transform: none !important;
+}
+
+/* ==================================================== */
+/* REDUCE VISUAL CLUTTER (Cognitive Fatigue Reduction)  */
+/* ==================================================== */
+body.reduce-clutter .screen-breadcrumbs {
+  display: none !important;
+}
+
+body.reduce-clutter .clutter-emoji,
+body.reduce-clutter .clutter-decorative {
+  display: none !important;
+}
+
+body.reduce-clutter .affirmation-footer {
+  display: none !important;
+}
+
+body.reduce-clutter #homeSummarySub {
+  display: none !important;
+}
+
+body.reduce-clutter .task-time-pill,
+body.reduce-clutter .task-meta-dot {
+  display: none !important;
+}
+
+body.reduce-clutter .schedule-key-container {
+  display: none !important;
+}
+
+body.reduce-clutter .timeline-content-card .badge-tag {
+  display: none !important;
+}
+
+body.reduce-clutter .focus-decorative-sub {
+  display: none !important;
+}
+
+body.reduce-clutter .card,
+body.reduce-clutter .card-next-step,
+body.reduce-clutter .task-row {
+  box-shadow: none !important;
+  border-color: var(--border-color);
+}
+
+body.reduce-clutter .font-preview-box {
+  border-style: solid !important;
+  background: transparent !important;
 }
 
 /* Desktop App Container / Device Simulator */
